@@ -13,6 +13,7 @@
 #include <vulkan/vulkan.h>
 
 #include "pdm_helpers.hpp"
+#include "pdm_themes.hpp"
 
 static VkAllocationCallbacks*   g_Allocator = NULL;
 static VkInstance               g_Instance = VK_NULL_HANDLE;
@@ -376,8 +377,10 @@ int main(int, char**)
   //io.ConfigViewportsNoTaskBarIcon = true;
 
   // Setup Dear ImGui style
-  ImGui::StyleColorsDark();
+//  ImGui::StyleColorsDark();
   //ImGui::StyleColorsLight();
+//  PDM::pdm_style_flat_dark();
+  PDM::pdm_style_visual_studio();
 
   // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
   ImGuiStyle& style = ImGui::GetStyle();
@@ -415,9 +418,9 @@ int main(int, char**)
   // - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
   //io.Fonts->AddFontDefault();
 //  io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\segoeui.ttf", 18.0f);
-//  io.Fonts->AddFontFromFileTTF("../imgui/misc/fonts/jetBrains/JetBrainsMonoNL-medium.ttf", 16.0f);
+  io.Fonts->AddFontFromFileTTF("../imgui/misc/fonts/jetBrains/JetBrainsMonoNL-semibold.ttf", 16.0f);
 //  io.Fonts->AddFontFromFileTTF("../imgui/misc/fonts/DroidSans.ttf", 16.0f);
-  io.Fonts->AddFontFromFileTTF("../imgui/misc/fonts/Roboto-Medium.ttf", 16.0f);
+//  io.Fonts->AddFontFromFileTTF("../imgui/misc/fonts/Roboto-Medium.ttf", 16.0f);
 //  io.Fonts->AddFontFromFileTTF("../imgui/misc/fonts/Cousine-Regular.ttf", 14.0f);
   //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
   //IM_ASSERT(font != NULL);
@@ -548,12 +551,12 @@ int main(int, char**)
           ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen);
           ImGui::MenuItem("Padding", NULL, &opt_padding);
           ImGui::Separator();
-
-          if (ImGui::MenuItem("Flag: NoSplit",                "", (dockspace_flags & ImGuiDockNodeFlags_NoSplit) != 0))                 { dockspace_flags ^= ImGuiDockNodeFlags_NoSplit; }
-          if (ImGui::MenuItem("Flag: NoResize",               "", (dockspace_flags & ImGuiDockNodeFlags_NoResize) != 0))                { dockspace_flags ^= ImGuiDockNodeFlags_NoResize; }
-          if (ImGui::MenuItem("Flag: NoDockingInCentralNode", "", (dockspace_flags & ImGuiDockNodeFlags_NoDockingInCentralNode) != 0))  { dockspace_flags ^= ImGuiDockNodeFlags_NoDockingInCentralNode; }
-          if (ImGui::MenuItem("Flag: AutoHideTabBar",         "", (dockspace_flags & ImGuiDockNodeFlags_AutoHideTabBar) != 0))          { dockspace_flags ^= ImGuiDockNodeFlags_AutoHideTabBar; }
-          if (ImGui::MenuItem("Flag: PassthruCentralNode",    "", (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode) != 0, opt_fullscreen)) { dockspace_flags ^= ImGuiDockNodeFlags_PassthruCentralNode; }
+          if(ImGui::MenuItem( "Theme: Visual Studio ", "")){
+            PDM::pdm_style_visual_studio();
+          }
+          if (ImGui::MenuItem("Them: Flat Dark ","")){
+            PDM::pdm_style_flat_dark();
+          }
           ImGui::Separator();
 
           if (ImGui::MenuItem("Close", NULL, false, p_open != NULL))

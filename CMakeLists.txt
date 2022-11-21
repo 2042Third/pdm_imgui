@@ -52,7 +52,6 @@ add_executable(pdm_ui ${sources}
     ${PDM_DIR}/main.cpp
     ${PDM_DIR}/pdm.cpp
     ${PDM_DIR}/pdm.h
-    ${PDM_DIR}/pdm_helpers.hpp
     ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
     ${IMGUI_DIR}/misc/freetype/imgui_freetype.h   # Freetype
     ${IMGUI_DIR}/misc/freetype/imgui_freetype.cpp # Freetype
@@ -61,7 +60,7 @@ add_executable(pdm_ui ${sources}
     ${IMGUI_DIR}/imgui_draw.cpp
     ${IMGUI_DIR}/imgui_demo.cpp
     ${IMGUI_DIR}/imgui_tables.cpp
-    ${IMGUI_DIR}/imgui_widgets.cpp pdm/pdm_helpers.hpp)
+    ${IMGUI_DIR}/imgui_widgets.cpp pdm/pdm_helpers.hpp pdm/pdm_themes.hpp)
 target_link_libraries(pdm_ui ${LIBRARIES} freetype harfbuzz )
 target_compile_definitions(pdm_ui PUBLIC -DImTextureID=ImU64)
 
