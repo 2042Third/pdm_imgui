@@ -14,6 +14,7 @@
 
 #include "pdm_helpers.hpp"
 #include "pdm_themes.hpp"
+#include "pdm.h"
 
 static VkAllocationCallbacks*   g_Allocator = NULL;
 static VkInstance               g_Instance = VK_NULL_HANDLE;
@@ -578,7 +579,16 @@ int main(int, char**)
 
       ImGui::End();
     }
+    // Tree
+    bool has_tree_view = true;
+    ImGui::Begin("Files", &has_tree_view);
+    PDM::Components::tree_view();
+    ImGui::End();
 
+#ifdef IMGUI_DEBUG
+    // Debug
+    ImGui::ShowStackToolWindow();
+#endif // IMGUI_DEBUG
     // Rendering
     ImGui::Render();
     ImDrawData* main_draw_data = ImGui::GetDrawData();
