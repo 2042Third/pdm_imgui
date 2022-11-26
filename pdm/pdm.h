@@ -6,8 +6,10 @@
 #pragma once
 
 #include <iostream>
+#define PDM_DOCK_MAIN "pdm docking space"
 
 namespace PDM {
+
   class Components {
 
   public:

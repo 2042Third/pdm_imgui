@@ -15,6 +15,7 @@
 #include "pdm_helpers.hpp"
 #include "pdm_themes.hpp"
 #include "pdm.h"
+#include "imgui_internal.h"
 
 static VkAllocationCallbacks*   g_Allocator = NULL;
 static VkInstance               g_Instance = VK_NULL_HANDLE;
@@ -535,13 +536,16 @@ int main(int, char**)
       if (opt_fullscreen)
         ImGui::PopStyleVar(2);
 
+
+      bool has_dock_init = true;
       // Submit the DockSpace
       ImGuiIO& io = ImGui::GetIO();
       if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
       {
-        ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+        ImGuiID dockspace_id = ImGui::GetID(PDM_DOCK_MAIN);
         ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
       }
+
 
       if (ImGui::BeginMenuBar())
       {
@@ -579,16 +583,26 @@ int main(int, char**)
 
       ImGui::End();
     }
+
     // Tree
     bool has_tree_view = true;
     ImGui::Begin("Files", &has_tree_view);
     PDM::Components::tree_view();
     ImGui::End();
 
-#ifdef IMGUI_DEBUG
+
+
+    // Docking test windows
+    ImGui::Begin("AAAA");
+    ImGui::Text("This is AAAA");
+    ImGui::End();
+    ImGui::Begin("BBBB");
+    ImGui::Text("This is BBBB");
+    ImGui::End();
+
     // Debug
     ImGui::ShowStackToolWindow();
-#endif // IMGUI_DEBUG
+
     // Rendering
     ImGui::Render();
     ImDrawData* main_draw_data = ImGui::GetDrawData();
