@@ -19,9 +19,10 @@ target_include_directories(pdm_ui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
     )
 
 
-add_subdirectory(lib/nativefiledialog-extended)
+add_subdirectory(lib/nativefiledialog-extended) # open dialog
+add_subdirectory(lib/cryptoSQLite) # encrypted database
 
-target_link_libraries(pdm_ui ${LIBRARIES} imgui_pdm nfd)
+target_link_libraries(pdm_ui ${LIBRARIES} imgui_pdm nfd cryptosqlite)
 target_compile_definitions(pdm_ui PUBLIC -DImTextureID=ImU64)
 
 
