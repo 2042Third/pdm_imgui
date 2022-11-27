@@ -3,16 +3,26 @@
 //
 
 #include "imgui.h"
+#include "pdm_database.h"
+#include "pdm_status.h"
+
 #pragma once
 
-#include <iostream>
-#define PDM_DOCK_MAIN "pdm docking space"
+//#include <iostream>
 
+#define PDM_DOCK_MAIN "pdm docking space"
 namespace PDM {
 
-  class Components {
 
-  public:
-    static bool tree_view();
+  class Runtime{
+    public:
+      Runtime();
+      ~Runtime();
+      pdm_database * db;
+  };
+
+
+  namespace Components {
+    bool tree_view();
   };
 }

@@ -346,6 +346,9 @@ int main(int, char**)
   glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
   GLFWwindow* window = glfwCreateWindow(1280, 1000, "PDM Notes", NULL, NULL);
 
+  // Setup PDM
+  auto *pdm  =  new PDM::Runtime();
+
   // Setup Vulkan
   if (!glfwVulkanSupported())
   {
@@ -602,6 +605,10 @@ int main(int, char**)
 
     // Debug
     ImGui::ShowStackToolWindow();
+    ImGui::Begin("pdm debug");
+    ImGui::Text("Database ");
+    ImGui::End();
+
 
     // Rendering
     ImGui::Render();
@@ -635,6 +642,8 @@ int main(int, char**)
 
   CleanupVulkanWindow();
   CleanupVulkan();
+
+  delete pdm;
 
   glfwDestroyWindow(window);
   glfwTerminate();
