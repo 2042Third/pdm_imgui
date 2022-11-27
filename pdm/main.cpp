@@ -16,6 +16,7 @@
 #include "pdm_themes.hpp"
 #include "pdm.h"
 #include "imgui_internal.h"
+#include "pdm_components.hpp"
 
 static VkAllocationCallbacks*   g_Allocator = NULL;
 static VkInstance               g_Instance = VK_NULL_HANDLE;
@@ -605,10 +606,7 @@ int main(int, char**)
 
     // Debug
     ImGui::ShowStackToolWindow();
-    ImGui::Begin("pdm debug");
-    ImGui::Text("Database ");
-    ImGui::End();
-
+    PDM::Components::database_view(pdm);
 
     // Rendering
     ImGui::Render();

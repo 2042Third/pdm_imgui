@@ -2,7 +2,6 @@
 // Created by Mike Yang on 11/20/2022.
 //
 
-#include "imgui.h"
 #include "pdm_database.h"
 #include "pdm_status.h"
 
@@ -22,7 +21,5 @@ namespace PDM {
   };
 
 
-  namespace Components {
-    bool tree_view();
-  };
+
 }

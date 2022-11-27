@@ -3,7 +3,6 @@
 //
 
 #include "pdm_database.h"
-#include <sqlite3.h>
 #include <string>
 
 namespace PDM {
@@ -17,9 +16,7 @@ namespace PDM {
   }
 
   pdm_database::pdm_database() {
-    sqlite3 *db;
-    char *zErrMsg = 0;
-    int rc;
+
     std::string pdm_db = "PDM";
     change(PDM::Status::LOADING);
     rc = sqlite3_open(pdm_db.data(), &db);
@@ -40,7 +37,25 @@ namespace PDM {
     change(PDM::Status::CLOSED);
   }
 
-  pdm_database::~pdm_database() {
+  pdm_database::~pdm_database() = default;
+}
 
+int PDM::pdm_database::open_db(char *name) {
+  change(PDM::Status::LOADING);
+  rc = sqlite3_open(name, &db);
+  change(PDM::Status::OPEN);
+  if( rc ){
+    change(PDM::Status::ERROR);
+    fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+    sqlite3_close(db);
+    return 0;
   }
+  return 1;
+}
+
+int PDM::pdm_database::close_db(char *name) {
+  change(PDM::Status::LOADING);
+  sqlite3_close(db);
+  change(PDM::Status::CLOSED);
+  return 1;
 }

@@ -6,6 +6,7 @@
 #define PDM_PLATFORMS_UI_PDM_DATABASE_H
 
 #include "pdm_status.h"
+#include "sqlite3.h"
 
 namespace PDM
 {
@@ -13,6 +14,14 @@ class pdm_database : public Status{
 public:
   pdm_database();
   ~pdm_database();
+
+  int open_db(char* name);
+  int close_db(char* name);
+
+  sqlite3 *db{};
+  char *zErrMsg = 0;
+  int rc;
+
 };
 
 }

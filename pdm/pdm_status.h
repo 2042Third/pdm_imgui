@@ -6,7 +6,6 @@
 #define PDM_PLATFORMS_UI_PDM_STATUS_H
 
 #include <string>
-#include <iostream>
 
 namespace PDM {
 
@@ -49,7 +48,6 @@ namespace PDM {
       } else {
         state.error = 1;
       }
-      std::cout<< "Status: "<< status<<std::endl;
     }
 
     State state;

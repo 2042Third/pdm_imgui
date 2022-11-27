@@ -9,7 +9,9 @@ add_executable (pdm_ui
     pdm_themes.hpp
     pdm_databse.cpp pdm_database.h
     lib/sqlite/sqlite3.c # sqlite
-    pdm_status.h)
+    pdm_status.h
+    pdm_components.hpp
+    )
 target_include_directories(pdm_ui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
     lib/sqlite/ # sqlite
     )
