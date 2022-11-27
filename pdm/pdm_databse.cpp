@@ -17,24 +17,24 @@ namespace PDM {
 
   pdm_database::pdm_database() {
 
-    std::string pdm_db = "PDM";
-    change(PDM::Status::LOADING);
-    rc = sqlite3_open(pdm_db.data(), &db);
-    change(PDM::Status::OPEN);
-    if( rc ){
-      change(PDM::Status::ERROR);
-      fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-      sqlite3_close(db);
-      return;
-    }
+//    std::string pdm_db = "PDM";
+//    change(PDM::Status::LOADING);
+//    rc = sqlite3_open(pdm_db.data(), &db);
+//    change(PDM::Status::OPEN);
+//    if( rc ){
+//      change(PDM::Status::ERROR);
+//      fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+//      sqlite3_close(db);
+//      return;
+//    }
 //    rc = sqlite3_exec(db, argv[2], callback, 0, &zErrMsg);
 //    if( rc!=SQLITE_OK ){
 //              change(5);
 //              fprintf(stderr, "SQL error: %s\n", zErrMsg);
 //        sqlite3_free(zErrMsg);
 //      }
-    sqlite3_close(db);
-    change(PDM::Status::CLOSED);
+//    sqlite3_close(db);
+//    change(PDM::Status::CLOSED);
   }
 
   pdm_database::~pdm_database() = default;

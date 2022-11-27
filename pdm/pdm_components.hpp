@@ -16,8 +16,8 @@ namespace PDM::Components {
         NFD_Init();
 
         nfdchar_t *outPath;
-        nfdfilteritem_t filterItem[2] = { { "Source code", "c,cpp,cc" }, { "Headers", "h,hpp" } };
-        nfdresult_t result = NFD_OpenDialog(&outPath, filterItem, 2, NULL);
+        nfdfilteritem_t filterItem[1] = {  };
+        nfdresult_t result = NFD_OpenDialog(&outPath, filterItem, 0, NULL);
         if (result == NFD_OKAY)
         {
           puts("Success!");
@@ -109,7 +109,7 @@ namespace PDM::Components {
 
   bool database_view ( PDM::Runtime* rt){
 
-    static char buf1[64] = "pdm";
+    static char buf1[2048] = "pdm";
     static char input[2048] = "";
     ImGui::Begin("Database debug");
     ImGui::Text("Database status: ");
@@ -123,7 +123,7 @@ namespace PDM::Components {
     if(ImGui::Button("Close Database")){
       rt->db->close_db(buf1);
     }
-    ImGui::InputText("Database Name",    buf1, 64, ImGuiInputTextFlags_CharsNoBlank);
+    ImGui::InputText("Database Name",    buf1, 2048, ImGuiInputTextFlags_CharsNoBlank);
 
     if(ImGui::Button("Open Database Viewer")){
       rt->toggle_database_debug_window();
