@@ -3,5 +3,10 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/glfw" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pdm/lib/cryptoSQLite" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pdm/lib/cryptoSQLite/external/icu-cmake" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pdm/lib/cryptoSQLite/external/icu-cmake/cmake-modules" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pdm/lib/cryptoSQLite/external/securememory" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pdm/lib/cryptoSQLite/external/securememory/cmake-modules" vcs="Git" />
   </component>
 </project>
