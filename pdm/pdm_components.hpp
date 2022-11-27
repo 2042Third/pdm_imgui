@@ -34,9 +34,44 @@ namespace PDM::Components {
         }
 
         NFD_Quit();
-      }
+      } // Open Button
       ImGui::EndMenu();
     }
+    return true;
+  }
+
+  bool debug_menu(PDM::Runtime* rt){
+    if (ImGui::BeginMenu("Debug"))
+    {
+      if(ImGui::BeginMenu("Database")){
+        if(ImGui::MenuItem("Open \".sqlite\" File", "")){
+          NFD_Init();
+
+          nfdchar_t *outPath;
+          nfdfilteritem_t filterItem[1] = {  };
+          nfdresult_t result = NFD_OpenDialog(&outPath, filterItem, 0, NULL);
+          if (result == NFD_OKAY)
+          {
+            puts(outPath);
+            rt->ui->database_current_file_path = "file:///";
+            rt->ui->database_current_file_path += outPath;
+            rt->db->open_db(rt->ui->database_current_file_path.data());
+            NFD_FreePath(outPath);
+          }
+          else if (result == NFD_CANCEL)
+          {
+            puts("User pressed cancel.");
+          }
+          else
+          {
+            printf("Error: %s\n", NFD_GetError());
+          }
+          NFD_Quit();
+        } // open .sqlite file Button
+        ImGui::EndMenu();
+      } // Database menu
+      ImGui::EndMenu();
+    } // debug menu
     return true;
   }
 
@@ -115,18 +150,23 @@ namespace PDM::Components {
     ImGui::Text("Database status: ");
     ImGui::SameLine();
     ImGui::Text(rt->db->text_status());
-
-    if(ImGui::Button("Open Database")){
-      rt->db->open_db(buf1);
-    }
+    ImGui::Text("Database opened: ");
     ImGui::SameLine();
-    if(ImGui::Button("Close Database")){
-      rt->db->close_db(buf1);
-    }
-    ImGui::InputText("Database Name",    buf1, 2048, ImGuiInputTextFlags_CharsNoBlank);
+    ImGui::Text(rt->ui->database_current_file_path.data());
+    if (ImGui::TreeNode("Other Options")) {
+      if (ImGui::Button("Open Database")) {
+        rt->db->open_db(buf1);
+        rt->ui->database_current_file_path = buf1;
+      }
+      ImGui::SameLine();
+      if (ImGui::Button("Close Database")) {
+        rt->db->close_db(buf1);
+      }
+      ImGui::InputText("Database Name", buf1, 2048, ImGuiInputTextFlags_CharsNoBlank);
 
-    if(ImGui::Button("Open Database Viewer")){
-      rt->toggle_database_debug_window();
+      if (ImGui::Button("Open Database Viewer")) {
+        rt->toggle_database_debug_window();
+      }
     }
 
     // Execute
@@ -142,10 +182,18 @@ namespace PDM::Components {
       ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), rt->db->zErrMsg);
       ImGui::PopTextWrapPos();
     }
+
+    // Keyboard actions
+    static int enter_count = 0;
+    ImGui::Text("Executed #%d: \"%s\"",enter_count,rt->db->last_command.data());
+    if (ImGui::IsKeyReleased(ImGuiKey_Enter)) {
+      rt->db->execute(input);
+      enter_count++;
+    }
     ImGui::End();
 
     // Children windows
-    if (rt->ui.has_database_debug_window){
+    if (rt->ui->has_database_debug_window){
       ImGui::Begin("Database viewer");
       ImGui::End();
     }

@@ -553,7 +553,12 @@ int main(int, char**)
 
       if (ImGui::BeginMenuBar())
       {
+        // Files menu
         PDM::Components::file_menu(pdm);
+        // Debug Menu
+        PDM::Components::debug_menu(pdm);
+
+        // Options Menu
         if (ImGui::BeginMenu("Options"))
         {
           // Disabling fullscreen would allow the window to be moved to the front of other windows,

@@ -22,7 +22,7 @@ public:
   sqlite3 *db{};
   char *zErrMsg = 0;
   int rc;
-
+   std::string last_command ;
 };
 
 }

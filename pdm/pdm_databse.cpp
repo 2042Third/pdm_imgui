@@ -42,7 +42,7 @@ namespace PDM {
 
 int PDM::pdm_database::open_db(char *name) {
   change(PDM::Status::LOADING);
-  rc = sqlite3_open(name, &db);
+  rc = sqlite3_open_v2(name, &db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_URI, NULL);
   change(PDM::Status::OPEN);
   if( rc ){
     change(PDM::Status::ERROR);
@@ -63,10 +63,12 @@ int PDM::pdm_database::execute(char *input) {
   change(PDM::Status::LOADING);
   rc = sqlite3_exec(db, input, callback, 0, &zErrMsg);
   if( rc!=SQLITE_OK ){
-            change(5);
-            fprintf(stderr, "SQL error: %s\n", zErrMsg);
-      sqlite3_free(zErrMsg);
-    }
+    change(PDM::Status::ERROR);
+    fprintf(stderr, "SQL error: %s\n", zErrMsg);
+    sqlite3_free(zErrMsg);
+    return 0;
+  }
+  last_command = input;
   change(PDM::Status::OPEN);
   return 1;
 }

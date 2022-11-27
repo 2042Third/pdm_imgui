@@ -5840,11 +5840,37 @@ static void ShowDemoWindowInputs()
             const ImGuiKey key_first = (ImGuiKey)0;
             //ImGui::Text("Legacy raw:");       for (ImGuiKey key = key_first; key < ImGuiKey_COUNT; key++) { if (io.KeysDown[key]) { ImGui::SameLine(); ImGui::Text("\"%s\" %d", ImGui::GetKeyName(key), key); } }
 #endif
-            ImGui::Text("Keys down:");          for (ImGuiKey key = key_first; key < ImGuiKey_COUNT; key = (ImGuiKey)(key + 1)) { if (funcs::IsLegacyNativeDupe(key)) continue; if (ImGui::IsKeyDown(key)) { ImGui::SameLine(); ImGui::Text("\"%s\" %d (%.02f)", ImGui::GetKeyName(key), key, ImGui::GetKeyData(key)->DownDuration); } }
-            ImGui::Text("Keys pressed:");       for (ImGuiKey key = key_first; key < ImGuiKey_COUNT; key = (ImGuiKey)(key + 1)) { if (funcs::IsLegacyNativeDupe(key)) continue; if (ImGui::IsKeyPressed(key)) { ImGui::SameLine(); ImGui::Text("\"%s\" %d", ImGui::GetKeyName(key), key); } }
-            ImGui::Text("Keys released:");      for (ImGuiKey key = key_first; key < ImGuiKey_COUNT; key = (ImGuiKey)(key + 1)) { if (funcs::IsLegacyNativeDupe(key)) continue; if (ImGui::IsKeyReleased(key)) { ImGui::SameLine(); ImGui::Text("\"%s\" %d", ImGui::GetKeyName(key), key); } }
+            ImGui::Text("Keys down:");
+            for (ImGuiKey key = key_first; key < ImGuiKey_COUNT; key = (ImGuiKey)(key + 1)) {
+              if (funcs::IsLegacyNativeDupe(key)) continue;
+              if (ImGui::IsKeyDown(key)) {
+                ImGui::SameLine();
+                ImGui::Text("\"%s\" %d (%.02f)", ImGui::GetKeyName(key), key, ImGui::GetKeyData(key)->DownDuration);
+              }
+            }
+            ImGui::Text("Keys pressed:");
+            for (ImGuiKey key = key_first; key < ImGuiKey_COUNT; key = (ImGuiKey)(key + 1)) {
+              if (funcs::IsLegacyNativeDupe(key)) continue;
+              if (ImGui::IsKeyPressed(key)) {
+                ImGui::SameLine();
+                ImGui::Text("\"%s\" %d", ImGui::GetKeyName(key), key);
+              }
+            }
+            ImGui::Text("Keys released:");
+            for (ImGuiKey key = key_first; key < ImGuiKey_COUNT; key = (ImGuiKey)(key + 1)) {
+              if (funcs::IsLegacyNativeDupe(key)) continue;
+              if (ImGui::IsKeyReleased(key)) {
+                ImGui::SameLine();
+                ImGui::Text("\"%s\" %d", ImGui::GetKeyName(key), key);
+              }
+            }
             ImGui::Text("Keys mods: %s%s%s%s", io.KeyCtrl ? "CTRL " : "", io.KeyShift ? "SHIFT " : "", io.KeyAlt ? "ALT " : "", io.KeySuper ? "SUPER " : "");
-            ImGui::Text("Chars queue:");        for (int i = 0; i < io.InputQueueCharacters.Size; i++) { ImWchar c = io.InputQueueCharacters[i]; ImGui::SameLine();  ImGui::Text("\'%c\' (0x%04X)", (c > ' ' && c <= 255) ? (char)c : '?', c); } // FIXME: We should convert 'c' to UTF-8 here but the functions are not public.
+            ImGui::Text("Chars queue:");
+            for (int i = 0; i < io.InputQueueCharacters.Size; i++) {
+              ImWchar c = io.InputQueueCharacters[i];
+              ImGui::SameLine();
+              ImGui::Text("\'%c\' (0x%04X)", (c > ' ' && c <= 255) ? (char)c : '?', c); }
+            // FIXME: We should convert 'c' to UTF-8 here but the functions are not public.
 
             // Draw an arbitrary US keyboard layout to visualize translated keys
             {

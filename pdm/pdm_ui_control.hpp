@@ -9,10 +9,13 @@ namespace PDM {
     struct Id {
       int has_database_debug_window = 0;
       bool open_file = false;
+      std::string database_current_file_path;
     };
   public:
-    int toggle_database_debug_window(){ui.has_database_debug_window=!ui.has_database_debug_window;return 1;}
-    Id ui;
+    UI(){ui = new Id();}
+    ~UI(){delete ui;}
+    int toggle_database_debug_window(){ui->has_database_debug_window=!ui->has_database_debug_window;return 1;}
+    Id *ui;
   };
 
 
