@@ -59,3 +59,14 @@ int PDM::pdm_database::close_db(char *name) {
   change(PDM::Status::CLOSED);
   return 1;
 }
+int PDM::pdm_database::execute(char *input) {
+  change(PDM::Status::LOADING);
+  rc = sqlite3_exec(db, input, callback, 0, &zErrMsg);
+  if( rc!=SQLITE_OK ){
+            change(5);
+            fprintf(stderr, "SQL error: %s\n", zErrMsg);
+      sqlite3_free(zErrMsg);
+    }
+  change(PDM::Status::OPEN);
+  return 1;
+}

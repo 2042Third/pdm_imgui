@@ -553,6 +553,7 @@ int main(int, char**)
 
       if (ImGui::BeginMenuBar())
       {
+        PDM::Components::file_menu(pdm);
         if (ImGui::BeginMenu("Options"))
         {
           // Disabling fullscreen would allow the window to be moved to the front of other windows,
@@ -572,6 +573,7 @@ int main(int, char**)
             *p_open = false;
           ImGui::EndMenu();
         }
+
         HelpMarker(
             "When docking is enabled, you can ALWAYS dock MOST window into another! Try it now!" "\n"
             "- Drag from window title bar or their tab to dock/undock." "\n"
@@ -593,8 +595,6 @@ int main(int, char**)
     ImGui::Begin("Files", &has_tree_view);
     PDM::Components::tree_view();
     ImGui::End();
-
-
 
     // Docking test windows
     ImGui::Begin("AAAA");

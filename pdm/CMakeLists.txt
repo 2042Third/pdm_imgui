@@ -11,11 +11,17 @@ add_executable (pdm_ui
     lib/sqlite/sqlite3.c # sqlite
     pdm_status.h
     pdm_components.hpp
+    pdm_ui_control.hpp
+
     )
 target_include_directories(pdm_ui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
     lib/sqlite/ # sqlite
     )
-target_link_libraries(pdm_ui ${LIBRARIES} imgui_pdm )
+
+
+add_subdirectory(lib/nativefiledialog-extended)
+
+target_link_libraries(pdm_ui ${LIBRARIES} imgui_pdm nfd)
 target_compile_definitions(pdm_ui PUBLIC -DImTextureID=ImU64)
 
 

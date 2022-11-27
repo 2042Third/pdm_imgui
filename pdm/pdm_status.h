@@ -27,6 +27,7 @@ namespace PDM {
     static const int ERROR    = 5;
 
     int current_status = 0;
+    std::string current_status_text = "NONE";
 
     /**
      * Change status
@@ -37,20 +38,32 @@ namespace PDM {
         state.open = 0;
         state.loading = 0;
         state.error = 0;
+        current_status_text = "NONE";
       } else if (status == LOADING) {
         state.loading = 1;
+        current_status_text = "LOADING";
       } else if (status == OPEN) {
         state.open = 1;
         state.loading = 0;
+        current_status_text = "OPEN";
       } else if (status == CLOSED) {
         state.open = 0;
         state.loading = 0;
+        current_status_text = "CLOSED";
       } else {
         state.error = 1;
+        current_status_text = "ERROR";
       }
     }
 
+    char* text_status (){
+      return current_status_text.data();
+    }
+
+
     State state;
   };
+
+
 }// namespace PDM
 #endif //PDM_PLATFORMS_UI_PDM_STATUS_H

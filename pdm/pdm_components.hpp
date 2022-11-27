@@ -3,12 +3,43 @@
 //
 
 #include "imgui.h"
-
+#include <nfd.h>
 #include "pdm_database.h"
 #include "pdm.h"
 
 // STATIC
 namespace PDM::Components {
+  bool file_menu(PDM::Runtime* rt){
+    if (ImGui::BeginMenu("Files"))
+    {
+      if(ImGui::MenuItem("Open", "")){
+        NFD_Init();
+
+        nfdchar_t *outPath;
+        nfdfilteritem_t filterItem[2] = { { "Source code", "c,cpp,cc" }, { "Headers", "h,hpp" } };
+        nfdresult_t result = NFD_OpenDialog(&outPath, filterItem, 2, NULL);
+        if (result == NFD_OKAY)
+        {
+          puts("Success!");
+          puts(outPath);
+          NFD_FreePath(outPath);
+        }
+        else if (result == NFD_CANCEL)
+        {
+          puts("User pressed cancel.");
+        }
+        else
+        {
+          printf("Error: %s\n", NFD_GetError());
+        }
+
+        NFD_Quit();
+      }
+      ImGui::EndMenu();
+    }
+    return true;
+  }
+
   bool tree_view() {
     static ImGuiTableFlags flags =
         ImGuiTableFlags_BordersV | ImGuiTableFlags_BordersOuterH | ImGuiTableFlags_Resizable | ImGuiTableFlags_RowBg |
@@ -76,21 +107,49 @@ namespace PDM::Components {
     return true;
   }
 
-  bool database_view (const PDM::Runtime* rt){
+  bool database_view ( PDM::Runtime* rt){
 
     static char buf1[64] = "pdm";
+    static char input[2048] = "";
+    ImGui::Begin("Database debug");
+    ImGui::Text("Database status: ");
+    ImGui::SameLine();
+    ImGui::Text(rt->db->text_status());
 
-    ImGui::Text("Database ");
     if(ImGui::Button("Open Database")){
       rt->db->open_db(buf1);
     }
+    ImGui::SameLine();
     if(ImGui::Button("Close Database")){
       rt->db->close_db(buf1);
     }
     ImGui::InputText("Database Name",    buf1, 64, ImGuiInputTextFlags_CharsNoBlank);
 
+    if(ImGui::Button("Open Database Viewer")){
+      rt->toggle_database_debug_window();
+    }
 
+    // Execute
+    ImGui::InputText("Command",    input, 2048, 0);
+    if(ImGui::Button("Execute SQL Command")){
+      rt->db->execute(input);
+    }
+
+    // Errors
+    if (rt->db->zErrMsg) {
+      ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Error: ");
+      ImGui::PushTextWrapPos();
+      ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), rt->db->zErrMsg);
+      ImGui::PopTextWrapPos();
+    }
     ImGui::End();
+
+    // Children windows
+    if (rt->ui.has_database_debug_window){
+      ImGui::Begin("Database viewer");
+      ImGui::End();
+    }
+
     return true;
   }
 

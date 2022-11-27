@@ -4,6 +4,7 @@
 
 #include "pdm_database.h"
 #include "pdm_status.h"
+#include "pdm_ui_control.hpp"
 
 #pragma once
 
@@ -11,13 +12,18 @@
 
 #define PDM_DOCK_MAIN "pdm docking space"
 namespace PDM {
-
-
-  class Runtime{
+  /**
+   * PDM runtime object that handles all runtime actions
+   * and states of the application
+   * */
+  class Runtime:
+      public Status,
+      public UI
+      {
     public:
       Runtime();
       ~Runtime();
-      pdm_database * db;
+    pdm_database * db;
   };
 
 

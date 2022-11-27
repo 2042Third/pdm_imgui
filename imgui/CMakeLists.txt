@@ -13,6 +13,5 @@ add_library(imgui_pdm
     imgui_tables.cpp
     imgui_widgets.cpp
     )
-
 target_link_libraries(imgui_pdm ${LIBRARIES} freetype harfbuzz )
 

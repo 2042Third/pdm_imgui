@@ -17,6 +17,7 @@ public:
 
   int open_db(char* name);
   int close_db(char* name);
+  int execute(char *input);
 
   sqlite3 *db{};
   char *zErrMsg = 0;
