@@ -3,6 +3,7 @@
 //
 
 #include "pdm_database.h"
+#include "crypto/pdmCryptoDB.hpp"
 #include <string>
 
 namespace PDM {
@@ -16,25 +17,6 @@ namespace PDM {
   }
 
   pdm_database::pdm_database() {
-
-//    std::string pdm_db = "PDM";
-//    change(PDM::Status::LOADING);
-//    rc = sqlite3_open(pdm_db.data(), &db);
-//    change(PDM::Status::OPEN);
-//    if( rc ){
-//      change(PDM::Status::ERROR);
-//      fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-//      sqlite3_close(db);
-//      return;
-//    }
-//    rc = sqlite3_exec(db, argv[2], callback, 0, &zErrMsg);
-//    if( rc!=SQLITE_OK ){
-//              change(5);
-//              fprintf(stderr, "SQL error: %s\n", zErrMsg);
-//        sqlite3_free(zErrMsg);
-//      }
-//    sqlite3_close(db);
-//    change(PDM::Status::CLOSED);
   }
 
   pdm_database::~pdm_database() = default;
@@ -42,10 +24,14 @@ namespace PDM {
 
 int PDM::pdm_database::open_db(char *name) {
   change(PDM::Status::LOADING);
-  rc = sqlite3_open_v2(name, &db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_URI, NULL);
+  cryptosqlite::setCryptoFactory([] (std::unique_ptr<IDataCrypt> &crypt) {
+    crypt.reset(new pdm_crypto_db());
+  });
+  rc = sqlite3_open_encrypted(name, &db, name, 3);
+//  rc = sqlite3_open_v2(name, &db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_URI, NULL);
   change(PDM::Status::OPEN);
   if( rc ){
-    change(PDM::Status::ERROR);
+    change(PDM::Status::PDM_ERROR);
     fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
     sqlite3_close(db);
     return 0;
@@ -63,7 +49,7 @@ int PDM::pdm_database::execute(char *input) {
   change(PDM::Status::LOADING);
   rc = sqlite3_exec(db, input, callback, 0, &zErrMsg);
   if( rc!=SQLITE_OK ){
-    change(PDM::Status::ERROR);
+    change(PDM::Status::PDM_ERROR);
     fprintf(stderr, "SQL error: %s\n", zErrMsg);
     sqlite3_free(zErrMsg);
     return 0;

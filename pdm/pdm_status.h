@@ -24,7 +24,7 @@ namespace PDM {
     static const int LOADING  = 2;
     static const int OPEN     = 3;
     static const int CLOSED   = 4;
-    static const int ERROR    = 5;
+    static const int PDM_ERROR    = 5;
 
     int current_status = 0;
     std::string current_status_text = "NONE";
