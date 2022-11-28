@@ -6,6 +6,7 @@
 #include <nfd.h>
 #include "pdm_database.h"
 #include "pdm.h"
+#include "empp.h"
 
 // STATIC
 namespace PDM::Components {
@@ -198,6 +199,41 @@ namespace PDM::Components {
       ImGui::End();
     }
 
+    return true;
+  }
+
+  bool crypto_test(PDM::Runtime* rt){
+    std::string input, ps;
+    static std::string  s_ps, enc, dec;
+
+    const int max_input = 4096;
+    static char input_buf[max_input+1], ps_buf[max_input+1];
+
+    ImGui::Text("Input: ");
+    ImGui::SameLine(150);
+    ImGui::Text(input_buf);
+    ImGui::Text("Password: ");
+    ImGui::SameLine(150);
+    ImGui::Text(ps_buf);
+    ImGui::Text("Password Scrypt: ");
+    ImGui::SameLine(150);
+    ImGui::Text(s_ps.c_str());
+    ImGui::Text("Output: ");
+    ImGui::SameLine(150);
+    ImGui::Text(enc.c_str());
+    ImGui::Text("Output Decrypted: ");
+    ImGui::SameLine(150);
+    ImGui::Text(dec.c_str());
+
+    ImGui::InputText("Input",    input_buf, max_input, 0);
+    ImGui::InputText("Password",    ps_buf, max_input, 0);
+    if(ImGui::Button("Done")){
+      ps = ps_buf;
+      input = input_buf;
+      s_ps = scrypt(ps);
+      enc = checker_in(s_ps, input);
+      dec = checker_out(s_ps, enc);
+    }
     return true;
   }
 

@@ -601,6 +601,11 @@ int main(int, char**)
     PDM::Components::tree_view();
     ImGui::End();
 
+    // encryption debug
+    ImGui::Begin("Encryption");
+    PDM::Components::crypto_test(pdm);
+    ImGui::End();
+
     // Docking test windows
     ImGui::Begin("AAAA");
     ImGui::Text("This is AAAA");
