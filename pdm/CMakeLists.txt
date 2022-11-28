@@ -18,6 +18,7 @@ add_executable (pdm_ui
 target_include_directories(pdm_ui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 #    lib/sqlite/ # sqlite
     lib/pdm-crypt-module
+    lib/cryptoSQLite
     )
 
 
@@ -26,9 +27,10 @@ add_subdirectory(lib/nativefiledialog-extended) # open dialog
 add_subdirectory(lib/cryptoSQLite) # encrypted database
 
 target_link_libraries(pdm_ui ${LIBRARIES} imgui_pdm
+    SecureMemory icu
     nfd # native file dialog
-    cryptosqlite # encrypted database interface
     cc20 # pdm encryption
+    cryptosqlite # encrypted database interface
     )
 target_compile_definitions(pdm_ui PUBLIC -DImTextureID=ImU64)
 
