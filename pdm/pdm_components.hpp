@@ -169,9 +169,19 @@ namespace PDM::Components {
         rt->toggle_database_debug_window();
       }
     }
-
+    if(ImGui::IsWindowFocused())
+      ImGui::Text("Has focus");
     // Execute
+    static int enter_count = 0;
     ImGui::InputText("Command",    input, 2048, 0);
+    if (ImGui::IsWindowFocused()&&ImGui::IsKeyReleased(ImGuiKey_Enter) ) {
+      if (strlen(input)!=0)
+        rt->db->execute(input);
+      enter_count++;
+    }
+    // Keyboard actions
+    ImGui::Text("Executed #%d: \"%s\"",enter_count,rt->db->last_command.data());
+
     if(ImGui::Button("Execute SQL Command")){
       rt->db->execute(input);
     }
@@ -184,13 +194,7 @@ namespace PDM::Components {
       ImGui::PopTextWrapPos();
     }
 
-    // Keyboard actions
-    static int enter_count = 0;
-    ImGui::Text("Executed #%d: \"%s\"",enter_count,rt->db->last_command.data());
-    if (ImGui::IsKeyReleased(ImGuiKey_Enter)) {
-      rt->db->execute(input);
-      enter_count++;
-    }
+
     ImGui::End();
 
     // Children windows
@@ -227,7 +231,8 @@ namespace PDM::Components {
 
     ImGui::InputText("Input",    input_buf, max_input, 0);
     ImGui::InputText("Password",    ps_buf, max_input, 0);
-    if(ImGui::Button("Done")){
+
+    if(ImGui::Button("Done") || (ImGui::IsWindowFocused()&&ImGui::IsKeyReleased(ImGuiKey_Enter) )){
       ps = ps_buf;
       input = input_buf;
       s_ps = scrypt(ps);
