@@ -7,7 +7,7 @@
 
 #include "pdm_status.h"
 #include "sqlite3.h"
-#include "cryptosqlite/cryptosqlite.h"
+//#include "cryptosqlite/cryptosqlite.h"
 
 namespace PDM
 {
