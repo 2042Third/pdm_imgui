@@ -7,7 +7,7 @@
 
 #include "pdm_status.h"
 #include "sqlite3.h"
-//#include "cryptosqlite/cryptosqlite.h"
+#include "cryptosqlite/cryptosqlite.h"
 
 namespace PDM
 {
@@ -21,7 +21,7 @@ public:
   int execute(char *input);
 
   sqlite3 *db{};
-//  cryptosqlite enc_db;
+  cryptosqlite enc_db;
   char *zErrMsg = 0;
   int rc;
    std::string last_command ;

@@ -3,7 +3,7 @@
 //
 
 #include "pdm_database.h"
-//#include "crypto/pdmCryptoDB.hpp"
+#include "crypto/pdmCryptoDB.hpp"
 #include <string>
 
 namespace PDM {
@@ -24,11 +24,11 @@ namespace PDM {
 
 int PDM::pdm_database::open_db(char *name) {
   change(PDM::Status::LOADING);
-//  cryptosqlite::setCryptoFactory([] (std::unique_ptr<IDataCrypt> &crypt) {
-//    crypt.reset(new pdm_crypto_db());
-//  });
-//  rc = sqlite3_open_encrypted(name, &db, name, 3);
-  rc = sqlite3_open_v2(name, &db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_URI, NULL);
+  cryptosqlite::setCryptoFactory([] (std::unique_ptr<IDataCrypt> &crypt) {
+    crypt.reset(new pdm_crypto_db());
+  });
+  rc = sqlite3_open_encrypted(name, &db, name, 3);
+//  rc = sqlite3_open_v2(name, &db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_URI, NULL);
   change(PDM::Status::OPEN);
   if( rc ){
     change(PDM::Status::PDM_ERROR);

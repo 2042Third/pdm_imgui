@@ -168,6 +168,7 @@ namespace PDM::Components {
       if (ImGui::Button("Open Database Viewer")) {
         rt->toggle_database_debug_window();
       }
+      ImGui::TreePop();
     }
     if(ImGui::IsWindowFocused())
       ImGui::Text("Has focus");
