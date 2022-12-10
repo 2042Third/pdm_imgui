@@ -1,11 +1,12 @@
 ﻿# CMakeList.txt : Top-level CMake project file, do global configuration
 # and include sub-projects here.
 #
-cmake_minimum_required (VERSION 3.12)
-
+cmake_minimum_required (VERSION 3.24)
+cmake_policy(SET CMP0079 NEW) # allow things from other directories
+cmake_policy(SET CMP0135 NEW) # cryptoSqlite icu download prebuilt binary
 project (pdm_platforms_ui C CXX)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 20)
 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DVK_PROTOTYPES")
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DVK_PROTOTYPES")
 
