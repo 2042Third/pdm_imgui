@@ -9,16 +9,17 @@ add_executable (pdm_ui
     pdm_themes.hpp
     pdm_databse.cpp
     pdm_database.h
-    lib/sqlite/sqlite3.c # sqlite
+#    lib/sqlite/sqlite3.c # sqlite
     pdm_status.h
     pdm_components.hpp
     pdm_ui_control.hpp
 #    crypto/pdmCryptoDB.hpp # encrypted database
     )
 target_include_directories(pdm_ui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
-        lib/sqlite/ # sqlite
+#        lib/sqlite/ # sqlite
     lib/pdm-crypt-module
-#    lib/cryptoSQLite
+    lib/cryptoSQLite
+    lib/cryptoSQLite/external/icu-cmake
     )
 #target_include_directories(pdm_ui PRIVATE
 #    lib/cryptoSQLite
@@ -27,13 +28,19 @@ target_include_directories(pdm_ui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 
 add_subdirectory(lib/pdm-crypt-module) # pdm encryption
 add_subdirectory(lib/nativefiledialog-extended) # open dialog
+#set(BUILD_ICU on)
+#set(ICU_BUILD_VERSION "72.1")
+#set(ICU_CROSS_ARCH "x86_64-w64-mingw32")
+#set(SYSTEM_ICU ON)
 add_subdirectory(lib/cryptoSQLite) # encrypted database
 
-target_link_libraries(pdm_ui ${LIBRARIES} imgui_pdm
-    SecureMemory icu
+target_link_libraries(pdm_ui ${LIBRARIES}
+    imgui_pdm
+#    SecureMemory
+#    icu
     nfd # native file dialog
     cc20 # pdm encryption
-#    cryptosqlite # encrypted database interface
+    cryptosqlite # encrypted database interface
     )
 target_compile_definitions(pdm_ui PUBLIC -DImTextureID=ImU64)
 
