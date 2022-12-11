@@ -143,6 +143,45 @@ namespace PDM::Components {
     return true;
   }
 
+  bool database_viewer (PDM::Runtime* rt) {
+    static ImGuiTableFlags flags = ImGuiTableFlags_ScrollX |ImGuiTableFlags_ScrollY |
+        ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersOuter | ImGuiTableFlags_BordersV |
+        ImGuiTableFlags_Resizable | ImGuiTableFlags_Reorderable | ImGuiTableFlags_Hideable;
+    static int freeze_cols = 1;
+    static int freeze_rows = 1;
+    static int table_width = rt->db->current_display_table.argc;
+    static size_t table_size = rt->db->current_display_table.argv.size();
+    ImVec2 outer_size = ImVec2(0.0f, ImGui::GetTextLineHeightWithSpacing() * 8);
+    if (ImGui::BeginTable("table_scrollx", rt->db->current_display_table.argc, flags, outer_size))
+    {
+      ImGui::TableSetupScrollFreeze(freeze_cols, freeze_rows);
+      for (int i=0;i<table_width;i++){
+        ImGui::TableSetupColumn(rt->db->current_display_table.col_name[i].c_str());
+      }
+//      ImGui::TableSetupColumn("Line #", ImGuiTableColumnFlags_NoHide); // Make the first column not hideable to match our use of TableSetupScrollFreeze()
+      ImGui::TableHeadersRow();
+      for (int row = 0; row < table_size; row++)
+      {
+        ImGui::TableNextRow();
+        for (int column = 0; column < table_width; column++)
+        {
+          // Both TableNextColumn() and TableSetColumnIndex() return true when a column is visible or performing width measurement.
+          // Because here we know that:
+          // - A) all our columns are contributing the same to row height
+          // - B) column 0 is always visible,
+          // We only always submit this one column and can skip others.
+          // More advanced per-column clipping behaviors may benefit from polling the status flags via TableGetColumnFlags().
+          if (!ImGui::TableSetColumnIndex(column) && column > 0)
+            continue;
+          ImGui::Text("%s", rt->db->current_display_table.argv[row][column].c_str());
+        }
+      }
+      ImGui::EndTable();
+    }
+
+    return true;
+  }
+
   bool database_view ( PDM::Runtime* rt){
 
     static char buf1[2048] = "pdm";
@@ -212,11 +251,13 @@ namespace PDM::Components {
     // Children windows
     if (rt->ui->has_database_debug_window){
       ImGui::Begin("Database viewer");
+      database_viewer(rt);
       ImGui::End();
     }
 
     return true;
   }
+
 
   bool crypto_test(PDM::Runtime* rt){
     std::string input, ps;

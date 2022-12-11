@@ -9,10 +9,15 @@
 #include "sqlite3.h"
 #include "cryptosqlite/cryptosqlite.h"
 
-namespace PDM
-{
+namespace PDM {
 class pdm_database : public Status{
 public:
+
+  struct return_table{
+    int argc;
+    std::vector<std::vector<std::string>> argv;
+    std::vector<std::string> col_name;
+  };
   pdm_database();
   ~pdm_database();
 
@@ -20,11 +25,19 @@ public:
   int close_db(char* name);
   int execute(char *input);
 
+  void reset (return_table* a) {
+    a->argc=0;
+    a->argv.clear();
+    a->col_name.clear();
+  }
+
   sqlite3 *db{};
   cryptosqlite enc_db;
-  char *zErrMsg = 0;
+  char *zErrMsg ;
   int rc;
-   std::string last_command ;
+  return_table current_display_table;
+  std::string last_command ;
+
 };
 
 }
