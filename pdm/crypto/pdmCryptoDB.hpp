@@ -47,35 +47,34 @@ public:
     crand.write_rand_bytes(tmp_buf,NONCE_SIZE+POLY_SIZE);
     wrappedKey.append(key);
     wrappedKey.append(tmp_buf,NONCE_SIZE+POLY_SIZE);
-    cmd_enc(key.const_data()
+    cmd_enc_s(key.const_data()
         ,key_size
         ,(uint8_t*)wrappedKey.data()
-        ,wrappingKey.const_data());
+        ,wrappingKey.const_data(), wrappingKey.size());
 
-    std::cout<<"key"<<std::endl;
-    print_stats(key.const_data(),key_size);
-    std::cout<<"Wrapped key"<<std::endl;
-    print_stats(wrappedKey.const_data(),key_size+NONCE_SIZE+POLY_SIZE);
-
-    std::cout<<"Wrapping key"<<std::endl;
-    print_stats(wrappingKey.const_data(),wrappingKey.size());
+//    std::cout<<"key"<<std::endl;
+//    print_stats(key.const_data(),key_size);
+//    std::cout<<"Wrapped key"<<std::endl;
+//    print_stats(wrappedKey.const_data(),key_size+NONCE_SIZE+POLY_SIZE);
+//
+//    std::cout<<"Wrapping key"<<std::endl;
+//    print_stats(wrappingKey.const_data(),wrappingKey.size());
   }
 
   void unwrapKey(Buffer &key, const Buffer &wrappedKey, const Buffer &wrappingKey) const override {
     size_t key_size= cc20_utility::nonce_key_pair_size();
 
-    cmd_dec(wrappedKey.const_data()
+    cmd_dec_s(wrappedKey.const_data()
                                 ,key_size+NONCE_SIZE+POLY_SIZE
                                 ,(uint8_t*)key.data()
-                                ,wrappingKey.const_data());
+                                ,wrappingKey.const_data(), wrappingKey.size());
 
-    // TODO: cleanup the stack buffers.
-    std::cout<<"key"<<std::endl;
-    print_stats(key.const_data(),key_size);
-    std::cout<<"Wrapped key"<<std::endl;
-    print_stats(wrappedKey.const_data(),key_size+NONCE_SIZE+POLY_SIZE);
-    std::cout<<"Wrapping key"<<std::endl;
-    print_stats(wrappingKey.const_data(),wrappingKey.size());
+//    std::cout<<"key"<<std::endl;
+//    print_stats(key.const_data(),key_size);
+//    std::cout<<"Wrapped key"<<std::endl;
+//    print_stats(wrappedKey.const_data(),key_size+NONCE_SIZE+POLY_SIZE);
+//    std::cout<<"Wrapping key"<<std::endl;
+//    print_stats(wrappingKey.const_data(),wrappingKey.size());
   }
 
   uint32_t extraSize() const override { return cc20_utility::nonce_key_pair_size()+NONCE_SIZE+POLY_SIZE+1; }
