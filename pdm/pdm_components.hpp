@@ -161,21 +161,17 @@ namespace PDM::Components {
     {
       ImGui::TableSetupScrollFreeze(freeze_cols, freeze_rows);
       for (int i=0;i<table_width;i++){
-        ImGui::TableSetupColumn(rt->db->current_display_table.col_name[i].c_str());
+        if(i==0)
+          ImGui::TableSetupColumn(rt->db->current_display_table.col_name[i].c_str(), ImGuiTableColumnFlags_NoHide);
+        else
+          ImGui::TableSetupColumn(rt->db->current_display_table.col_name[i].c_str());
       }
-//      ImGui::TableSetupColumn("Line #", ImGuiTableColumnFlags_NoHide); // Make the first column not hideable to match our use of TableSetupScrollFreeze()
       ImGui::TableHeadersRow();
       for (int row = 0; row < table_size; row++)
       {
         ImGui::TableNextRow();
         for (int column = 0; column < table_width; column++)
         {
-          // Both TableNextColumn() and TableSetColumnIndex() return true when a column is visible or performing width measurement.
-          // Because here we know that:
-          // - A) all our columns are contributing the same to row height
-          // - B) column 0 is always visible,
-          // We only always submit this one column and can skip others.
-          // More advanced per-column clipping behaviors may benefit from polling the status flags via TableGetColumnFlags().
           if (!ImGui::TableSetColumnIndex(column) && column > 0)
             continue;
           ImGui::Text("%s", rt->db->current_display_table.argv[row][column].c_str());
@@ -201,6 +197,7 @@ namespace PDM::Components {
 
     ImGui::InputText("Database Name", buf1, 2048, ImGuiInputTextFlags_CharsNoBlank);
     ImGui::InputText("Password",    pas, 2048, 0);
+    ImGui::Text("Password length: %d", strlen(pas));
     if (ImGui::Button("Open Database")) {
       rt->db->open_db(buf1,pas, strlen(pas));
       rt->ui->database_current_file_path = buf1;

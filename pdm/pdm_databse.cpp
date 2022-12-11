@@ -36,7 +36,7 @@ namespace PDM {
   }
 }
 
-int PDM::pdm_database::open_db(char *name, char*pas, size_t pas_size) {
+int PDM::pdm_database::open_db(char *name, char*pas, int pas_size) {
   change(PDM::Status::LOADING);
   cryptosqlite::setCryptoFactory([] (std::unique_ptr<IDataCrypt> &crypt) {
     crypt = std::make_unique<pdm_crypto_db>();
