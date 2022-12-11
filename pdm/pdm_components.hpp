@@ -190,7 +190,7 @@ namespace PDM::Components {
   bool database_view ( PDM::Runtime* rt){
 
     static char buf1[2048] = "pdm";
-    static char input[2048] = "", pas[2048]="1234";
+    static char input[2048] = "", pas[2048]="1234", back_ground_q[30] = "select * from sqlite_schema;";
     ImGui::Begin("Database debug");
     ImGui::Text("Database status: ");
     ImGui::SameLine();
@@ -209,14 +209,20 @@ namespace PDM::Components {
     if (ImGui::Button("Close Database")) {
       rt->db->close_db(buf1);
     }
+    ImGui::SameLine();
 
-    if (ImGui::TreeNode("Other Options")) {
-
-      if (ImGui::Button("Open Database Viewer")) {
-        rt->toggle_database_debug_window();
-      }
-      ImGui::TreePop();
+    if (ImGui::Button("Open Database Viewer")) {
+      rt->toggle_database_debug_window();
     }
+
+    if (ImGui::Button("Get All Tables")) {
+      rt->db->execute(back_ground_q);
+    }
+
+//    if (ImGui::TreeNode("Other Options")) {
+//
+//      ImGui::TreePop();
+//    }
     if(ImGui::IsWindowFocused())
       ImGui::Text("Has focus");
     else
