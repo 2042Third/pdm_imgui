@@ -607,10 +607,11 @@ int main(int, char**)
     ImGui::End();
 
     // Docking test windows
-    ImGui::Begin("AAAA");
+    static bool has_aaa = true, has_bbb=true;
+    ImGui::Begin("AAAA", &has_aaa);
     ImGui::Text("This is AAAA");
     ImGui::End();
-    ImGui::Begin("BBBB");
+    ImGui::Begin("BBBB", &has_bbb);
     ImGui::Text("This is BBBB");
     ImGui::End();
 

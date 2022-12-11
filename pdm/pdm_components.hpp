@@ -258,7 +258,7 @@ namespace PDM::Components {
 
     // Children windows
     if (rt->ui->has_database_debug_window){
-      ImGui::Begin("Database viewer");
+      ImGui::Begin("Database viewer",&rt->ui->database_viewer_closable);
       database_viewer(rt);
       ImGui::End();
     }
