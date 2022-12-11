@@ -149,9 +149,14 @@ namespace PDM::Components {
         ImGuiTableFlags_Resizable | ImGuiTableFlags_Reorderable | ImGuiTableFlags_Hideable;
     static int freeze_cols = 1;
     static int freeze_rows = 1;
-    static int table_width = rt->db->current_display_table.argc;
-    static size_t table_size = rt->db->current_display_table.argv.size();
+    static int table_width=0;table_width = rt->db->current_display_table.argc;
+    if (table_width<=0){
+      ImGui::Text("No data available");
+      return true;
+    }
+    static size_t table_size=0; table_size = rt->db->current_display_table.argv.size();
     ImVec2 outer_size = ImVec2(0.0f, ImGui::GetTextLineHeightWithSpacing() * 8);
+
     if (ImGui::BeginTable("table_scrollx", rt->db->current_display_table.argc, flags, outer_size))
     {
       ImGui::TableSetupScrollFreeze(freeze_cols, freeze_rows);

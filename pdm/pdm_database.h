@@ -14,7 +14,7 @@ class pdm_database : public Status{
 public:
 
   struct return_table{
-    int argc;
+    int argc=0;
     std::vector<std::vector<std::string>> argv;
     std::vector<std::string> col_name;
   };
@@ -25,7 +25,7 @@ public:
   int close_db(char* name);
   int execute(char *input);
 
-  void reset (return_table* a) {
+  static void reset (return_table* a) {
     a->argc=0;
     a->argv.clear();
     a->col_name.clear();
