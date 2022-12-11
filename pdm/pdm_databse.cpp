@@ -4,6 +4,7 @@
 
 #include "pdm_database.h"
 #include "crypto/pdmCryptoDB.hpp"
+#include <memory>
 #include <string>
 
 namespace PDM {
@@ -22,12 +23,12 @@ namespace PDM {
   pdm_database::~pdm_database() = default;
 }
 
-int PDM::pdm_database::open_db(char *name) {
+int PDM::pdm_database::open_db(char *name, char*pas,size_t pas_size) {
   change(PDM::Status::LOADING);
   cryptosqlite::setCryptoFactory([] (std::unique_ptr<IDataCrypt> &crypt) {
-    crypt.reset(new pdm_crypto_db());
+    crypt = std::make_unique<pdm_crypto_db>();
   });
-  rc = sqlite3_open_encrypted(name, &db, name, 3);
+  rc = sqlite3_open_encrypted(name, &db, pas, pas_size); // open the encrypted database
 //  rc = sqlite3_open_v2(name, &db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_URI, NULL);
   change(PDM::Status::OPEN);
   if( rc ){

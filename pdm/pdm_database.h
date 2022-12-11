@@ -16,7 +16,7 @@ public:
   pdm_database();
   ~pdm_database();
 
-  int open_db(char* name);
+  int open_db(char* name, char*pas,size_t pas_size);
   int close_db(char* name);
   int execute(char *input);
 

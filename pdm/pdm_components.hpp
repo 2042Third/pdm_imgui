@@ -56,7 +56,7 @@ namespace PDM::Components {
             puts(outPath);
             rt->ui->database_current_file_path = "file:///";
             rt->ui->database_current_file_path += outPath;
-            rt->db->open_db(rt->ui->database_current_file_path.data());
+//            rt->db->open_db(rt->ui->database_current_file_path.data());
             NFD_FreePath(outPath);
           }
           else if (result == NFD_CANCEL)
@@ -146,7 +146,7 @@ namespace PDM::Components {
   bool database_view ( PDM::Runtime* rt){
 
     static char buf1[2048] = "pdm";
-    static char input[2048] = "";
+    static char input[2048] = "", pas[2048]="1234";
     ImGui::Begin("Database debug");
     ImGui::Text("Database status: ");
     ImGui::SameLine();
@@ -154,16 +154,19 @@ namespace PDM::Components {
     ImGui::Text("Database opened: ");
     ImGui::SameLine();
     ImGui::Text(rt->ui->database_current_file_path.data());
+
+    ImGui::InputText("Database Name", buf1, 2048, ImGuiInputTextFlags_CharsNoBlank);
+    ImGui::InputText("Password",    pas, 2048, 0);
+    if (ImGui::Button("Open Database")) {
+      rt->db->open_db(buf1,pas, strlen(pas));
+      rt->ui->database_current_file_path = buf1;
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Close Database")) {
+      rt->db->close_db(buf1);
+    }
+
     if (ImGui::TreeNode("Other Options")) {
-      if (ImGui::Button("Open Database")) {
-        rt->db->open_db(buf1);
-        rt->ui->database_current_file_path = buf1;
-      }
-      ImGui::SameLine();
-      if (ImGui::Button("Close Database")) {
-        rt->db->close_db(buf1);
-      }
-      ImGui::InputText("Database Name", buf1, 2048, ImGuiInputTextFlags_CharsNoBlank);
 
       if (ImGui::Button("Open Database Viewer")) {
         rt->toggle_database_debug_window();
@@ -172,8 +175,12 @@ namespace PDM::Components {
     }
     if(ImGui::IsWindowFocused())
       ImGui::Text("Has focus");
+    else
+      ImGui::Text("No focus");
+
     // Execute
     static int enter_count = 0;
+    ImGui::Text("Length: %d",strlen(input));
     ImGui::InputText("Command",    input, 2048, 0);
     if (ImGui::IsWindowFocused()&&ImGui::IsKeyReleased(ImGuiKey_Enter) ) {
       if (strlen(input)!=0)
@@ -185,6 +192,10 @@ namespace PDM::Components {
 
     if(ImGui::Button("Execute SQL Command")){
       rt->db->execute(input);
+    }
+    ImGui::SameLine();
+    if(ImGui::Button("Clear")){
+      input[0] = '\0';
     }
 
     // Errors
