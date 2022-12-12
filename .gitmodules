@@ -7,3 +7,6 @@
 [submodule "pdm/lib/cryptoSQLite"]
 	path = pdm/lib/cryptoSQLite
 	url = https://github.com/2042Third/cryptoSQLite.git
+[submodule "glfw"]
+    path = glfw
+    url = https://github.com/glfw/glfw.git
