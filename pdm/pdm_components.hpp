@@ -216,10 +216,6 @@ namespace PDM::Components {
       rt->db->execute(back_ground_q);
     }
 
-//    if (ImGui::TreeNode("Other Options")) {
-//
-//      ImGui::TreePop();
-//    }
     if(ImGui::IsWindowFocused())
       ImGui::Text("Has focus");
     else
