@@ -13,3 +13,6 @@
 [submodule "glfw"]
     path = glfw
     url = https://github.com/glfw/glfw.git
+[submodule "pdm_network"]
+	path = pdm/lib/pdm_network
+	url = https://github.com/2042third/pdm_network.git

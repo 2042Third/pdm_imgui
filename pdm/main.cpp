@@ -432,7 +432,7 @@ int main(int, char**)
   ImFontConfig config;
   config.MergeMode = true;
   io.Fonts->AddFontFromFileTTF("../../imgui/misc/fonts/jetBrains/JetBrainsMonoNL-semibold.ttf", 16.0f, NULL, io.Fonts->GetGlyphRangesDefault());
-  io.Fonts->AddFontFromFileTTF("../../imgui/misc/fonts/ARIALUNI.TTF", 16.0f, &config, io.Fonts->GetGlyphRangesChineseFull() );
+//  io.Fonts->AddFontFromFileTTF("../../imgui/misc/fonts/ARIALUNI.TTF", 16.0f, &config, io.Fonts->GetGlyphRangesChineseFull() );
 
 //  io.Fonts->AddFontFromFileTTF("../imgui/misc/fonts/Roboto-Medium.ttf", 16.0f);
 //  io.Fonts->AddFontFromFileTTF("../imgui/misc/fonts/Cousine-Regular.ttf", 14.0f);
