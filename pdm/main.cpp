@@ -426,12 +426,19 @@ int main(int, char**)
 //  io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\segoeui.ttf", 18.0f);
 //  io.Fonts->AddFontFromFileTTF("../../imgui/misc/fonts/jetBrains/JetBrainsMonoNL-semibold.ttf", 16.0f);
 //  io.Fonts->AddFontFromFileTTF("../imgui/misc/fonts/DroidSans.ttf", 16.0f);
-  io.Fonts->AddFontFromFileTTF("../../imgui/misc/fonts/ARIALUNI.TTF", 16.0f, NULL, io.Fonts->GetGlyphRangesChineseFull() );
+
+  ImFontConfig config, config_oversample;
+  config.MergeMode = true;
+  config_oversample.OversampleH = 2;
+  config_oversample.OversampleV = 2;
+  io.Fonts->AddFontFromFileTTF("../../imgui/misc/fonts/jetBrains/JetBrainsMonoNL-semibold.ttf", 16.0f, &config_oversample, io.Fonts->GetGlyphRangesDefault());
+  io.Fonts->AddFontFromFileTTF("../../imgui/misc/fonts/ARIALUNI.TTF", 16.0f, &config, io.Fonts->GetGlyphRangesChineseFull() );
+
 //  io.Fonts->AddFontFromFileTTF("../imgui/misc/fonts/Roboto-Medium.ttf", 16.0f);
 //  io.Fonts->AddFontFromFileTTF("../imgui/misc/fonts/Cousine-Regular.ttf", 14.0f);
   //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
   //IM_ASSERT(font != NULL);
-
+  io.Fonts->Build();
   // Upload Fonts
   {
     // Use any command queue
