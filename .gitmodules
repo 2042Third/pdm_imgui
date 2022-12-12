@@ -1,12 +1,15 @@
 [submodule "pdm/lib/pdm-crypt-module"]
 	path = pdm/lib/pdm-crypt-module
 	url = https://github.com/2042third/pdm-crypt-module.git
+
 [submodule "pdm/lib/nativefiledialog-extended"]
 	path = pdm/lib/nativefiledialog-extended
 	url = https://github.com/btzy/nativefiledialog-extended.git
+
 [submodule "pdm/lib/cryptoSQLite"]
 	path = pdm/lib/cryptoSQLite
 	url = https://github.com/2042Third/cryptoSQLite.git
+
 [submodule "glfw"]
     path = glfw
     url = https://github.com/glfw/glfw.git
