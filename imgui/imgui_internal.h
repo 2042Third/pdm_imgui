@@ -843,6 +843,8 @@ enum ImGuiInputTextFlagsPrivate_
     ImGuiInputTextFlags_MergedItem          = 1 << 28,  // For internal use by TempInputText(), will skip calling ItemAdd(). Require bounding-box to strictly match.
 };
 
+
+
 // Extend ImGuiButtonFlags_
 enum ImGuiButtonFlagsPrivate_
 {

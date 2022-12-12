@@ -386,7 +386,9 @@ int main(int, char**)
 //  ImGui::StyleColorsDark();
   //ImGui::StyleColorsLight();
 //  PDM::pdm_style_flat_dark();
-  PDM::pdm_style_visual_studio();
+//  PDM::pdm_style_visual_studio();
+  PDM::adobe_spectrum_dark();
+//  PDM::adobe_spectrum_light();
 
   // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
   ImGuiStyle& style = ImGui::GetStyle();
@@ -576,6 +578,12 @@ int main(int, char**)
           }
           if (ImGui::MenuItem("Them: Flat Dark ","")){
             PDM::pdm_style_flat_dark();
+          }
+          if (ImGui::MenuItem("Them: Adobe Spectrum Dark","")){
+            PDM::adobe_spectrum_dark();
+          }
+          if (ImGui::MenuItem("Them: Adobe Spectrum Light","")){
+            PDM::adobe_spectrum_light();
           }
           ImGui::Separator();
 
