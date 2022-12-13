@@ -5,6 +5,7 @@
 #include "pdm_database.h"
 #include "pdm_status.h"
 #include "pdm_ui_control.hpp"
+#include "pdm_net.h"
 
 #pragma once
 
@@ -18,7 +19,8 @@ namespace PDM {
    * */
   class Runtime:
       public Status,
-      public UI
+      public UI,
+      public network
       {
     public:
       Runtime();
