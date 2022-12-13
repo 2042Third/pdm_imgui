@@ -17,6 +17,6 @@
 	path = pdm/lib/pdm_network
 	url = https://github.com/2042third/pdm_network.git
 [submodule "json"]
-	path = json
+	path = pdm/lib/json
 	url = https://github.com/nlohmann/json.git
 	branch = master
