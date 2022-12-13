@@ -19,6 +19,7 @@ target_include_directories(pdm_ui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
     lib/pdm-crypt-module
     lib/pdm-crypt-module/src/lib
     lib/cryptoSQLite
+    lib/json/single_include # json parser
 #    lib/cryptoSQLite/external/icu-cmake
     )
 
