@@ -13,7 +13,7 @@ add_executable (pdm_ui
     pdm_components.hpp
     pdm_ui_control.hpp
     crypto/pdmCryptoDB.hpp # encrypted database
-    )
+    pdm_net.cpp)
 target_include_directories(pdm_ui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 #        lib/sqlite/ # sqlite
     lib/pdm-crypt-module

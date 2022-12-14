@@ -6,10 +6,12 @@
 #define PDM_PLATFORMS_UI_PDM_NET_H
 
 #include <string>
+#include "pdm-network.h"
 
 namespace PDM {
 
   class network {
+  public:
     struct notes{
       const std::string GetHeadsType = "heads";
       const std::string GetNoteType = "retrieve";
@@ -19,11 +21,20 @@ namespace PDM {
     };
     struct actions {
       const std::string pdmRootURL = "https://pdm.pw";
-      const std::string signURL = pdmRootURL+"/auth/signin";
+      const std::string signinURL = pdmRootURL+"/auth/signin";
       const std::string signupURL = pdmRootURL + "/auth/signup";
       const std::string notesGetHeadsURL = pdmRootURL + "/auth/note";
     };
 
+    int  signin_action(const std::string &a);
+
+    network();
+    ~network();
+
+    const actions actions;
+    const notes notes;
+  private:
+    pdm_network net;
   };
 
 } // PDM
