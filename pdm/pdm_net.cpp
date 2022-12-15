@@ -4,6 +4,7 @@
 
 #include <pdm_net.h>
 #include <nlohmann/json.hpp>
+#include <pdm_network/pdm-network.h>
 
 namespace PDM {
 
