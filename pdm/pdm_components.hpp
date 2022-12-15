@@ -44,6 +44,12 @@ namespace PDM::Components {
   bool debug_menu(PDM::Runtime* rt){
     if (ImGui::BeginMenu("Debug"))
     {
+      if(ImGui::BeginMenu("Network")){
+
+        if(ImGui::MenuItem("Toggle Network Debug", "")){
+          rt->ui->net_debug_open = ! rt->ui->net_debug_open;
+        }
+      }
       if(ImGui::BeginMenu("Database")){
         if(ImGui::MenuItem("Open \".sqlite\" File", "")){
           NFD_Init();

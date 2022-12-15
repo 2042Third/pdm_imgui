@@ -6,7 +6,9 @@
 #define PDM_PLATFORMS_UI_PDM_NET_H
 
 #include <string>
-#include "pdm-network.h"
+#include <nlohmann/json.hpp>
+#include <map>
+//#include "pdm-network.h"
 
 namespace PDM {
 
@@ -26,7 +28,15 @@ namespace PDM {
       const std::string notesGetHeadsURL = pdmRootURL + "/auth/note";
     };
 
-    int  signin_action(const std::string &a);
+    template<typename T>
+    static std::string get_json (std::map<T,T>&a) {
+      using json = nlohmann::json;
+      json j(a);
+      std::string signin_data =to_string(j);
+      return std::move(signin_data);
+    }
+
+    int  signin_action(const std::string&a);
 
     network();
     ~network();
@@ -34,7 +44,7 @@ namespace PDM {
     const actions actions;
     const notes notes;
   private:
-    pdm_network net;
+//    pdm_network net;
   };
 
 } // PDM

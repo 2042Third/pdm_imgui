@@ -12,6 +12,7 @@
 #include <GLFW/glfw3.h>
 #include <vulkan/vulkan.h>
 
+#include "pdm_debug_comps.hpp"
 #include "pdm_helpers.hpp"
 #include "pdm_themes.hpp"
 #include "pdm.h"
@@ -631,6 +632,12 @@ int main(int, char**)
     // Debug
     ImGui::ShowStackToolWindow();
     PDM::Components::database_view(pdm);
+
+
+    ImGui::Begin("Network Debug", &has_bbb);
+    PDM::Components::net_debug(pdm);
+    ImGui::End();
+
 
     // Rendering
     ImGui::Render();

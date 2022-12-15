@@ -9,6 +9,7 @@ namespace PDM {
     struct Id {
       int has_database_debug_window = 1; // default database viewer to true
       bool open_file = false;
+      bool net_debug_open = true;
       bool database_viewer_closable=true;
       std::string database_current_file_path;
     };
