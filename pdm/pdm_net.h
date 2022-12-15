@@ -27,7 +27,7 @@ namespace PDM {
       const std::string signupURL = pdmRootURL + "/auth/signup";
       const std::string notesGetHeadsURL = pdmRootURL + "/auth/note";
     };
-
+    void post (const std::string& a,const std::string& b);
     template<typename T>
     static std::string get_json (std::map<T,T>&a) {
       using json = nlohmann::json;
