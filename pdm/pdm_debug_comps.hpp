@@ -26,7 +26,7 @@ namespace PDM::Components {
     const float footer_height_to_reserve1 =  ImGui::GetFrameHeightWithSpacing();
     if (ImGui::BeginChild("ServerResponse", ImVec2(0, 50.0f), false, ImGuiWindowFlags_HorizontalScrollbar)) {
       ImGui::Text("Server Response");
-      ImGui::Text("\"%s\"", wt.readptr);
+      ImGui::Text("\"%s\"", wt.readptr.c_str());
     }
     ImGui::EndChild();
     ImGui::Separator();

@@ -9,21 +9,16 @@
 
 namespace PDM {
 
-  static size_t read_callback(char *dest, size_t size, size_t nmemb, void *userp)
+  static size_t read_callback( char *data, size_t size, size_t nmemb, void *userp)
   {
     auto *wt = (struct NetWriter *)userp;
     size_t buffer_size = size*nmemb;
-    std::string buffer_ = std::string (wt->readptr);
-    std::cout<<"Got: "<<buffer_<<std::endl;
     if(wt->sizeleft) {
-      /* copy as much as possible from the source to the destination */
-      size_t copy_this_much = wt->sizeleft;
-      if(copy_this_much > buffer_size)
-        copy_this_much = buffer_size;
-      memcpy(dest, wt->readptr, copy_this_much);
-      wt->readptr += copy_this_much;
-      wt->sizeleft -= copy_this_much;
-      return copy_this_much; /* we copied this many bytes */
+      wt->readptr = std::move(std::string(data,buffer_size));
+      std::cout<< "Made copy => "<< wt->readptr<<std::endl;
+      wt->readptr += buffer_size;
+      wt->sizeleft -= buffer_size;
+      return buffer_size; /* we copied this many bytes */
     }
     return 0; /* no more data left to deliver */
   }
