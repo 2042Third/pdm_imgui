@@ -461,8 +461,9 @@ namespace PDM {
     ImVec4* colors = style->Colors;
     colors[ImGuiCol_Text] = ColorConvertU32ToFloat4(Spectrum::Dark::GRAY800); // text on hovered controls is gray900
     colors[ImGuiCol_TextDisabled] = ColorConvertU32ToFloat4(Spectrum::Dark::GRAY500);
-    colors[ImGuiCol_WindowBg] = ColorConvertU32ToFloat4(Spectrum::Dark::GRAY100);
-    colors[ImGuiCol_ChildBg] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
+    colors[ImGuiCol_WindowBg] = ColorConvertU32ToFloat4(Spectrum::Dark::GRAY200);
+//    colors[ImGuiCol_ChildBg] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
+    colors[ImGuiCol_ChildBg] = ColorConvertU32ToFloat4(Spectrum::Dark::GRAY75);
     colors[ImGuiCol_PopupBg] = ColorConvertU32ToFloat4(Spectrum::Dark::GRAY50); // not sure about this. Note: applies to tooltips too.
     colors[ImGuiCol_Border] = ColorConvertU32ToFloat4(Spectrum::Dark::GRAY300);
     colors[ImGuiCol_BorderShadow] = ColorConvertU32ToFloat4(Spectrum::Static::NONE); // We don't want shadows. Ever.

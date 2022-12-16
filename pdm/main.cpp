@@ -12,13 +12,13 @@
 #include <GLFW/glfw3.h>
 #include <vulkan/vulkan.h>
 
-#include "pdm_debug_comps.hpp"
+#include "pdm_platforms_ui/pdm/ui/pdm_debug_comps.hpp"
 #include "pdm_helpers.hpp"
-#include "pdm_themes.hpp"
-#include "pdm_menus.hpp"
+#include "pdm_platforms_ui/pdm/themes/pdm_themes.hpp"
+#include "pdm_platforms_ui/pdm/ui/pdm_menus.hpp"
 #include "pdm.h"
 #include "imgui_internal.h"
-#include "pdm_components.hpp"
+#include "pdm_platforms_ui/pdm/ui/pdm_components.hpp"
 
 static VkAllocationCallbacks*   g_Allocator = NULL;
 static VkInstance               g_Instance = VK_NULL_HANDLE;

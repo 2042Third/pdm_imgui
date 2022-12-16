@@ -21,14 +21,17 @@ namespace PDM::Components {
     ImGui::Separator();
 
     const float footer_height_to_reserve1 =  ImGui::GetFrameHeightWithSpacing();
-    if (ImGui::BeginChild("ServerResponse", ImVec2(0, 50.0f), false, ImGuiWindowFlags_HorizontalScrollbar)) {
+    ImGui::PushStyleColor(ImGuiCol_WindowBg,ImGui::GetStyle().Colors[ImGuiCol_Button]); // Change output view color
+    if (ImGui::BeginChild("ServerResponse", ImVec2(0, 100.0f), false, ImGuiWindowFlags_HorizontalScrollbar)) {
       ImGui::Text("Server Response");
-      ImGui::Text("\"%s\"", rt->wt.readptr.c_str());
+      ImGui::TextWrapped("\"%s\"", rt->wt.readptr.c_str());
     }
     ImGui::EndChild();
+    ImGui::PopStyleColor(1); // Change back the output color
+
     ImGui::Separator();
     const float footer_height_to_reserve2 =  ImGui::GetFrameHeightWithSpacing();
-    if (ImGui::BeginChild("ResponseDetail", ImVec2(0, 50.0f), false, ImGuiWindowFlags_HorizontalScrollbar)) {
+    if (ImGui::BeginChild("ResponseDetail", ImVec2(0, 100.0f), false, ImGuiWindowFlags_HorizontalScrollbar)) {
       ImGui::Text("Response Detail");
       ImGui::Text("Response Size: %d", rt->wt.sizeleft);
     }

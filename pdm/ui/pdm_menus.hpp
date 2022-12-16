@@ -8,7 +8,7 @@
 #include "empp.h"
 #include "pdm.h"
 #include "pdm_database.h"
-#include <nfd.h>
+#include "pdm_platforms_ui/pdm/lib/nativefiledialog-extended/src/include/nfd.h"
 #include "imgui.h"
 
 namespace PDM {

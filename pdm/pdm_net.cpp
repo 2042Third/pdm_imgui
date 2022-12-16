@@ -13,7 +13,6 @@ namespace PDM {
   {
     auto *wt = (struct NetWriter *)userp;
     wt->readptr = std::move(std::string(data,nmemb));
-    std::cout<< "Made copy => "<< wt->readptr<<std::endl;
     return nmemb; /* we copied this many bytes */
   }
 
