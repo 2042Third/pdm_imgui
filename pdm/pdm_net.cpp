@@ -12,15 +12,9 @@ namespace PDM {
   static size_t read_callback( char *data, size_t size, size_t nmemb, void *userp)
   {
     auto *wt = (struct NetWriter *)userp;
-    size_t buffer_size = size*nmemb;
-    if(wt->sizeleft) {
-      wt->readptr = std::move(std::string(data,buffer_size));
-      std::cout<< "Made copy => "<< wt->readptr<<std::endl;
-      wt->readptr += buffer_size;
-      wt->sizeleft -= buffer_size;
-      return buffer_size; /* we copied this many bytes */
-    }
-    return 0; /* no more data left to deliver */
+    wt->readptr = std::move(std::string(data,nmemb));
+    std::cout<< "Made copy => "<< wt->readptr<<std::endl;
+    return nmemb; /* we copied this many bytes */
   }
 
   int network::signin_action(const std::string&a, NetWriter* wt) {

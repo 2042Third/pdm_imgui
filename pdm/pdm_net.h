@@ -43,6 +43,7 @@ namespace PDM {
 
     const actions actions;
     const notes notes;
+    struct NetWriter wt;
   private:
 //    pdm_network net;
   };
