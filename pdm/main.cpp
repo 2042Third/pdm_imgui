@@ -15,6 +15,7 @@
 #include "pdm_debug_comps.hpp"
 #include "pdm_helpers.hpp"
 #include "pdm_themes.hpp"
+#include "pdm_menus.hpp"
 #include "pdm.h"
 #include "imgui_internal.h"
 #include "pdm_components.hpp"
@@ -562,9 +563,9 @@ int main(int, char**)
       if (ImGui::BeginMenuBar())
       {
         // Files menu
-        PDM::Components::file_menu(pdm);
+        PDM::file_menu(pdm);
         // Debug Menu
-        PDM::Components::debug_menu(pdm);
+        PDM::debug_menu(pdm);
 
         // Options Menu
         if (ImGui::BeginMenu("Options"))
@@ -613,7 +614,7 @@ int main(int, char**)
     static bool has_tree_view = true;
     if(has_tree_view) {
       if(ImGui::Begin("Files", &has_tree_view)) {
-        PDM::Components::tree_view();
+        PDM::Components::files_tree_view();
         ImGui::End();
       }
     }
