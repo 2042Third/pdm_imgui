@@ -45,12 +45,11 @@ namespace PDM::Components {
     if (ImGui::BeginMenu("Debug"))
     {
       if(ImGui::BeginMenu("Network")){
-
         if(ImGui::MenuItem("Toggle Network Debug", "")){
           rt->ui->net_debug_open = ! rt->ui->net_debug_open;
         }
+        ImGui::EndMenu(); // network
       }
-      ImGui::EndMenu(); // network
       if(ImGui::BeginMenu("Database")){
         if(ImGui::MenuItem("Open \".sqlite\" File", "")){
           NFD_Init();
@@ -76,10 +75,10 @@ namespace PDM::Components {
           }
           NFD_Quit();
         } // open .sqlite file Button
-        ImGui::EndMenu();
-      } // Database menu
-      ImGui::EndMenu();
-    } // debug menu
+        ImGui::EndMenu();// Database menu
+      }
+      ImGui::EndMenu();// debug menu
+    }
     return true;
   }
 
@@ -194,7 +193,7 @@ namespace PDM::Components {
 
     static char buf1[2048] = "pdm";
     static char input[2048] = "", pas[2048]="1234", back_ground_q[30] = "select * from sqlite_schema;";
-    ImGui::Begin("Database debug");
+    ImGui::Begin("Database debug" , &rt->ui->has_database_debug_window);
     ImGui::Text("Database status: ");
     ImGui::SameLine();
     ImGui::Text(rt->db->text_status());

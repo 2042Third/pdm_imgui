@@ -610,10 +610,13 @@ int main(int, char**)
     }
 
     // Tree
-    bool has_tree_view = true;
-    ImGui::Begin("Files", &has_tree_view);
-    PDM::Components::tree_view();
-    ImGui::End();
+    static bool has_tree_view = true;
+    if(has_tree_view) {
+      if(ImGui::Begin("Files", &has_tree_view)) {
+        PDM::Components::tree_view();
+        ImGui::End();
+      }
+    }
 
     // encryption debug
     ImGui::Begin("Encryption");
@@ -621,22 +624,29 @@ int main(int, char**)
     ImGui::End();
 
     // Docking test windows
-    static bool has_aaa = true, has_bbb=true;
-    ImGui::Begin("AAAA", &has_aaa);
-    ImGui::Text("This is AAAA");
-    ImGui::End();
-    ImGui::Begin("BBBB", &has_bbb);
-    ImGui::Text("This is BBBB");
-    ImGui::End();
+    static bool has_aaa = true, has_bbb= true, has_net_debug = true;
+    if(has_aaa){
+      if(ImGui::Begin("AAAA", &has_aaa)) {
+        ImGui::Text("This is AAAA");
+        ImGui::End();
+      }
+    }
+    if(has_bbb) {
+      ImGui::Begin("BBBB", &has_bbb);
+      ImGui::Text("This is BBBB");
+      ImGui::End();
+    }
 
     // Debug
     ImGui::ShowStackToolWindow();
-    PDM::Components::database_view(pdm);
-
-
-    ImGui::Begin("Network Debug", &has_bbb);
-    PDM::Components::net_debug(pdm);
-    ImGui::End();
+    if (pdm->ui->has_database_debug_window) {
+      PDM::Components::database_view(pdm);
+    }
+    if (pdm->ui->net_debug_open) {
+      ImGui::Begin("Network Debug", &pdm->ui->net_debug_open);
+      PDM::Components::net_debug(pdm);
+      ImGui::End();
+    }
 
 
     // Rendering
