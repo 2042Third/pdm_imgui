@@ -50,6 +50,7 @@ namespace PDM::Components {
           rt->ui->net_debug_open = ! rt->ui->net_debug_open;
         }
       }
+      ImGui::EndMenu(); // network
       if(ImGui::BeginMenu("Database")){
         if(ImGui::MenuItem("Open \".sqlite\" File", "")){
           NFD_Init();
