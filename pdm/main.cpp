@@ -615,8 +615,8 @@ int main(int, char**)
     if(has_tree_view) {
       if(ImGui::Begin("Files", &has_tree_view)) {
         PDM::Components::files_tree_view();
-        ImGui::End();
       }
+      ImGui::End();
     }
 
     // encryption debug
@@ -629,8 +629,8 @@ int main(int, char**)
     if(has_aaa){
       if(ImGui::Begin("AAAA", &has_aaa)) {
         ImGui::Text("This is AAAA");
-        ImGui::End();
       }
+      ImGui::End();
     }
     if(has_bbb) {
       ImGui::Begin("BBBB", &has_bbb);

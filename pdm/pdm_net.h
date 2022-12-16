@@ -8,7 +8,7 @@
 #include <string>
 #include <nlohmann/json.hpp>
 #include <map>
-//#include "pdm-network.h"
+#include "pdm-network.h"
 
 namespace PDM {
 
@@ -27,7 +27,7 @@ namespace PDM {
       const std::string signupURL = pdmRootURL + "/auth/signup";
       const std::string notesGetHeadsURL = pdmRootURL + "/auth/note";
     };
-    void post (const std::string& a,const std::string& b);
+    static void post (const std::string& a, const std::string& b, NetWriter* wt);
     template<typename T>
     static std::string get_json (std::map<T,T>&a) {
       using json = nlohmann::json;
@@ -36,7 +36,7 @@ namespace PDM {
       return std::move(signin_data);
     }
 
-    int  signin_action(const std::string&a);
+    int  signin_action(const std::string&a, NetWriter* wt) ;
 
     network();
     ~network();

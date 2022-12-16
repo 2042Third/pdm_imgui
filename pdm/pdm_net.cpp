@@ -5,13 +5,16 @@
 #include <pdm_net.h>
 #include <nlohmann/json.hpp>
 #include <pdm_network/pdm-network.h>
+#include <iostream>
 
 namespace PDM {
 
   static size_t read_callback(char *dest, size_t size, size_t nmemb, void *userp)
   {
-    struct WriteThis *wt = (struct WriteThis *)userp;
+    auto *wt = (struct NetWriter *)userp;
     size_t buffer_size = size*nmemb;
+    std::string buffer_ = std::string (wt->readptr);
+    std::cout<<"Got: "<<buffer_<<std::endl;
     if(wt->sizeleft) {
       /* copy as much as possible from the source to the destination */
       size_t copy_this_much = wt->sizeleft;
@@ -25,20 +28,14 @@ namespace PDM {
     return 0; /* no more data left to deliver */
   }
 
-  int network::signin_action(const std::string&a) {
+  int network::signin_action(const std::string&a, NetWriter* wt) {
 
-    post(a,actions.signinURL);
+    post(a,actions.signinURL,  wt);
     return 1;
   }
 
-  void network::post (const std::string& a,const std::string& b) {
-
-    std::string rstr;
-    rstr.resize(2048);
-    struct WriteThis wt;
-    wt.readptr = rstr.data();
-    wt.sizeleft = rstr.size();
-    pdm_network::post(a,b, read_callback, &wt);
+  void network::post (const std::string& a, const std::string& b, NetWriter* wt) {
+    pdm_network::post(a,b, read_callback, wt);
   }
 
 
