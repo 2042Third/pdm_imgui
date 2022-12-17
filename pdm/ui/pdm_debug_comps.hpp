@@ -19,12 +19,14 @@ namespace PDM::Components {
       rt->signin_action(j_str, &rt->wt);
     }
     ImGui::Separator();
-
     const float footer_height_to_reserve1 =  ImGui::GetFrameHeightWithSpacing();
     ImGui::PushStyleColor(ImGuiCol_WindowBg,ImGui::GetStyle().Colors[ImGuiCol_Button]); // Change output view color
-    if (ImGui::BeginChild("ServerResponse", ImVec2(0, 100.0f), false, ImGuiWindowFlags_HorizontalScrollbar)) {
+    if (ImGui::BeginChild("ServerResponse", ImVec2(0, 100.0f), false, ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_AlwaysVerticalScrollbar)) {
       ImGui::Text("Server Response");
-      ImGui::TextWrapped("\"%s\"", rt->wt.readptr.c_str());
+      ImGui::Separator();
+      ImGui::InputTextMultiline("##source", ( char*)rt->wt.readptr.c_str(), rt->wt.readptr.size()
+                                , ImVec2(-FLT_MIN, 100.0f - ImGui::GetTextLineHeight()), ImGuiInputTextFlags_ReadOnly);
+      ImGui::Separator();
     }
     ImGui::EndChild();
     ImGui::PopStyleColor(1); // Change back the output color

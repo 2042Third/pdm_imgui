@@ -204,26 +204,31 @@ namespace PDM::Components {
 
     const int max_input = 4096;
     static char input_buf[max_input+1], ps_buf[max_input+1];
-
+    ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::ColorConvertU32ToFloat4(Spectrum::Dark::GRAY200)); // push color
     ImGui::Text("Input: ");
     ImGui::SameLine(150);
-    ImGui::Text(input_buf);
+    ImGui::InputText("##Outputinput_buf", input_buf, strlen(input_buf), ImGuiInputTextFlags_ReadOnly);
+
     ImGui::Text("Password: ");
     ImGui::SameLine(150);
-    ImGui::Text(ps_buf);
+    ImGui::InputText("##OutputPassword", ps_buf, strlen(ps_buf), ImGuiInputTextFlags_ReadOnly);
+
     ImGui::Text("Password Scrypt: ");
     ImGui::SameLine(150);
-    ImGui::Text(s_ps.c_str());
+    ImGui::InputText("##OutputScrypt", ( char*)s_ps.c_str(), s_ps.size(), ImGuiInputTextFlags_ReadOnly);
+
     ImGui::Text("Output: ");
     ImGui::SameLine(150);
-    ImGui::Text(enc.c_str());
+    ImGui::InputText("##Outputenc",  ( char*)enc.c_str(), enc.size(), ImGuiInputTextFlags_ReadOnly);
+
     ImGui::Text("Output Decrypted: ");
     ImGui::SameLine(150);
-    ImGui::Text(dec.c_str());
+    ImGui::InputText("##Outputdec",  ( char*)dec.c_str(), dec.size(), ImGuiInputTextFlags_ReadOnly);
+
+    ImGui::PopStyleColor(); // pop color
 
     ImGui::InputText("Input",    input_buf, max_input, 0);
     ImGui::InputText("Password",    ps_buf, max_input, 0);
-
     if(ImGui::Button("Done") || (ImGui::IsWindowFocused()&&ImGui::IsKeyReleased(ImGuiKey_Enter) )){
       ps = ps_buf;
       input = input_buf;
