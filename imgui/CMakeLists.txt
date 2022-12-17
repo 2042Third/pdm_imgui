@@ -13,5 +13,13 @@ add_library(imgui_pdm
     imgui_tables.cpp
     imgui_widgets.cpp
     )
-target_link_libraries(imgui_pdm ${LIBRARIES} freetype harfbuzz )
+find_library(FREETYPE_LIB freetype ${CMAKE_CURRENT_SOURCE_DIR}/libs/built/harfbuzz-icu-freetype/freetype/)
+target_include_directories(imgui_pdm PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/libs/built/harfbuzz-icu-freetype/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/libs/built/harfbuzz-icu-freetype/include/freetype
+    )
+target_link_libraries(imgui_pdm ${LIBRARIES}
+#    harfbuzz
+    ${FREETYPE_LIB}
+    )
 

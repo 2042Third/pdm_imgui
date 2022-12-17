@@ -27,7 +27,8 @@ include_directories(${GLFW_DIR}/include)
 # Dear ImGui
 set(IMGUI_DIR ./imgui)
 include_directories(${IMGUI_DIR} ${IMGUI_DIR}/backends ..)
-add_subdirectory(${IMGUI_DIR}/libs/harfbuzz-icu-freetype)
+#add_subdirectory(${IMGUI_DIR}/libs/harfbuzz-icu-freetype) # build
+#add_subdirectory(${IMGUI_DIR}/libs/built)
 
 
 # Libraries
