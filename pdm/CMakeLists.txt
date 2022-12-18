@@ -17,14 +17,12 @@ add_executable (pdm_ui
     pdm_net.h
     ui/pdm_debug_comps.hpp)
 target_include_directories(pdm_ui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
-#        lib/sqlite/ # sqlite
     lib/
     lib/pdm-crypt-module
     lib/pdm-crypt-module/src/lib
     lib/cryptoSQLite
     lib/pdm_network
     lib/json/single_include # json parser
-#    lib/cryptoSQLite/external/icu-cmake
     )
 
 
