@@ -625,18 +625,6 @@ int main(int, char**)
     ImGui::End();
 
     // Docking test windows
-    static bool has_aaa = true, has_bbb= true, has_net_debug = true;
-    if(has_aaa){
-      if(ImGui::Begin("AAAA", &has_aaa)) {
-        ImGui::Text("This is AAAA");
-      }
-      ImGui::End();
-    }
-    if(has_bbb) {
-      ImGui::Begin("BBBB", &has_bbb);
-      ImGui::Text("This is BBBB");
-      ImGui::End();
-    }
 
     // Debug
     ImGui::ShowStackToolWindow();
