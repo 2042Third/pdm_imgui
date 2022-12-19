@@ -200,41 +200,89 @@ namespace PDM::Components {
 
   bool crypto_test(PDM::Runtime* rt){
     std::string input, ps;
-    static std::string  s_ps, enc, dec;
 
-    const int max_input = 4096;
-    static char input_buf[max_input+1], ps_buf[max_input+1];
-    ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::ColorConvertU32ToFloat4(Spectrum::Dark::GRAY200)); // push color
-    ImGui::Text("Input: ");
-    ImGui::SameLine(150);
-    ImGui::InputText("##Outputinput_buf", input_buf, strlen(input_buf), ImGuiInputTextFlags_ReadOnly);
+    {
+      ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
+      if (ImGui::BeginTabBar("EncryptionTabBar", tab_bar_flags))
+      {
+        if (ImGui::BeginTabItem("Basic Encryption"))
+        {
+          static std::string  s_ps, enc, dec;
+          const int max_input = 4096;
+          static char input_buf[max_input+1], ps_buf[max_input+1];
+          ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::ColorConvertU32ToFloat4(Spectrum::Dark::GRAY200)); // push color
+          ImGui::Text("Input: ");
+          ImGui::SameLine(150);
+          ImGui::InputText("##Outputinput_buf", input_buf, strlen(input_buf), ImGuiInputTextFlags_ReadOnly);
 
-    ImGui::Text("Password: ");
-    ImGui::SameLine(150);
-    ImGui::InputText("##OutputPassword", ps_buf, strlen(ps_buf), ImGuiInputTextFlags_ReadOnly);
+          ImGui::Text("Password: ");
+          ImGui::SameLine(150);
+          ImGui::InputText("##OutputPassword", ps_buf, strlen(ps_buf), ImGuiInputTextFlags_ReadOnly);
 
-    ImGui::Text("Password Scrypt: ");
-    ImGui::SameLine(150);
-    ImGui::InputText("##OutputScrypt", ( char*)s_ps.c_str(), s_ps.size(), ImGuiInputTextFlags_ReadOnly);
+          ImGui::Text("Password Scrypt: ");
+          ImGui::SameLine(150);
+          ImGui::InputText("##OutputScrypt", ( char*)s_ps.c_str(), s_ps.size(), ImGuiInputTextFlags_ReadOnly);
 
-    ImGui::Text("Output: ");
-    ImGui::SameLine(150);
-    ImGui::InputText("##Outputenc",  ( char*)enc.c_str(), enc.size(), ImGuiInputTextFlags_ReadOnly);
+          ImGui::Text("Output: ");
+          ImGui::SameLine(150);
+          ImGui::InputText("##Outputenc",  ( char*)enc.c_str(), enc.size(), ImGuiInputTextFlags_ReadOnly);
 
-    ImGui::Text("Output Decrypted: ");
-    ImGui::SameLine(150);
-    ImGui::InputText("##Outputdec",  ( char*)dec.c_str(), dec.size(), ImGuiInputTextFlags_ReadOnly);
+          ImGui::Text("Output Decrypted: ");
+          ImGui::SameLine(150);
+          ImGui::InputText("##Outputdec",  ( char*)dec.c_str(), dec.size(), ImGuiInputTextFlags_ReadOnly);
 
-    ImGui::PopStyleColor(); // pop color
+          ImGui::PopStyleColor(); // pop color
 
-    ImGui::InputText("Input",    input_buf, max_input, 0);
-    ImGui::InputText("Password",    ps_buf, max_input, 0);
-    if(ImGui::Button("Done") || (ImGui::IsWindowFocused()&&ImGui::IsKeyReleased(ImGuiKey_Enter) )){
-      ps = ps_buf;
-      input = input_buf;
-      s_ps = scrypt(ps);
-      enc = checker_in(s_ps, input);
-      dec = checker_out(s_ps, enc);
+          ImGui::InputText("Input",    input_buf, max_input, 0);
+          ImGui::InputText("Password",    ps_buf, max_input, 0);
+          if(ImGui::Button("Done") || (ImGui::IsWindowFocused()&&ImGui::IsKeyReleased(ImGuiKey_Enter) )){
+            ps = ps_buf;
+            input = input_buf;
+            s_ps = scrypt(ps);
+            enc = checker_in(s_ps, input);
+            dec = checker_out(s_ps, enc);
+          }
+          ImGui::EndTabItem();
+          // End Basic Encryption
+        }
+        if (ImGui::BeginTabItem("Hash & Scrypt"))
+        {
+          static std::string  s_ps, hash, d_hash, i_buf;
+          const int max_input = 4096;
+          static char input_buf[max_input+1], ps_buf[max_input+1];
+          ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::ColorConvertU32ToFloat4(Spectrum::Dark::GRAY200)); // push color
+
+          ImGui::Text("Scrypt: ");
+          ImGui::SameLine(150);
+          ImGui::InputText("##OutputScrypt", ( char*)s_ps.c_str(), s_ps.size(), ImGuiInputTextFlags_ReadOnly);
+
+          ImGui::Text("SHA3-hash: ");
+          ImGui::SameLine(150);
+          ImGui::InputText("##OutputHash", ( char*)hash.c_str(), hash.size(), ImGuiInputTextFlags_ReadOnly);
+
+          ImGui::Text("Doouble SHA3-hash: ");
+          ImGui::SameLine(150);
+          ImGui::InputText("##OutputDHash", ( char*)d_hash.c_str(), d_hash.size(), ImGuiInputTextFlags_ReadOnly);
+          ImGui::PopStyleColor(); // pop color
+
+          ImGui::InputText("Input",    input_buf, max_input, 0);
+          if(ImGui::Button("Done") || (ImGui::IsWindowFocused()&&ImGui::IsKeyReleased(ImGuiKey_Enter) )){
+            i_buf = input_buf;
+            s_ps = scrypt(i_buf);
+            hash = get_hash(i_buf);
+            d_hash = get_hash(i_buf+i_buf);
+          }
+          ImGui::EndTabItem();
+          // End Hash & Scrypt
+        }
+        if (ImGui::BeginTabItem("Cucumber"))
+        {
+          ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
+          ImGui::EndTabItem();
+        }
+        ImGui::EndTabBar();
+      }
+      ImGui::Separator();
     }
     return true;
   }
