@@ -1,7 +1,4 @@
 
-
-
-
 add_library(imgui_pdm
     backends/imgui_impl_glfw.cpp
     misc/freetype/imgui_freetype.h   # Freetype

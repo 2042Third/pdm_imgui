@@ -16,6 +16,9 @@ add_executable (pdm_ui
     pdm_net.cpp
     pdm_net.h
     ui/pdm_debug_comps.hpp)
+
+find_library(SECUREMEM_LIB SecureMemory ${CMAKE_CURRENT_SOURCE_DIR}/lib/cryptoSQLite/external/securememorybin/bin)
+
 target_include_directories(pdm_ui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
     lib/
     lib/pdm-crypt-module
