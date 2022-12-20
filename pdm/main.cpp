@@ -623,6 +623,11 @@ int main(int, char**)
     ImGui::Begin("Encryption");
     PDM::Components::crypto_test(pdm);
     ImGui::End();
+    //Signin
+    ImGui::Begin("Signin");
+    PDM::Components::signin_popup(pdm);
+
+    ImGui::End();
 
     // Docking test windows
 
