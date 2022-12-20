@@ -50,7 +50,7 @@ namespace PDM {
 
     const actions actions;
     const notes notes;
-    struct NetObj wt; // store the most recent return callback
+    struct NetObj wt; // store the most recent network return callback
 
   private:
 //    pdm_network net;

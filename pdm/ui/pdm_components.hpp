@@ -260,7 +260,7 @@ namespace PDM::Components {
           ImGui::SameLine(150);
           ImGui::InputText("##OutputHash", ( char*)hash.c_str(), hash.size(), ImGuiInputTextFlags_ReadOnly);
 
-          ImGui::Text("Doouble SHA3-hash: ");
+          ImGui::Text("Double SHA3-hash: ");
           ImGui::SameLine(150);
           ImGui::InputText("##OutputDHash", ( char*)d_hash.c_str(), d_hash.size(), ImGuiInputTextFlags_ReadOnly);
           ImGui::PopStyleColor(); // pop color
