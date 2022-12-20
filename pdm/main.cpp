@@ -382,11 +382,11 @@ int main(int, char**)
   io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
   io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
   //io.ConfigViewportsNoAutoMerge = true;
-  //io.ConfigViewportsNoTaskBarIcon = true;
+//  io.ConfigViewportsNoTaskBarIcon = true;
 
   // Setup Dear ImGui style
 //  ImGui::StyleColorsDark();
-  //ImGui::StyleColorsLight();
+//  ImGui::StyleColorsLight();
 //  PDM::pdm_style_flat_dark();
 //  PDM::pdm_style_visual_studio();
   PDM::adobe_spectrum_dark();
@@ -542,7 +542,7 @@ int main(int, char**)
       // any change of dockspace/settings would lead to windows being stuck in limbo and never being visible.
       if (!opt_padding)
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-      ImGui::Begin("DockSpace Demo", p_open, window_flags);
+      ImGui::Begin("DockSpace Demo", p_open, window_flags );
       if (!opt_padding)
         ImGui::PopStyleVar();
 
