@@ -40,7 +40,8 @@ namespace PDM::Components {
       ImGui::Text("Status: %d", rt->wt.js.contains("status"));
       if (rt->wt.js.contains("status")) {
         for (auto& [key, value] : rt->wt.js.items()) {
-          std::cout << key << " : " << value << "\n";
+          if (value) ImGui::Text(" %s ", key.c_str());
+//          if (value) ImGui::Text(" %s: %s ", key.c_str(),value.get<std::string>().c_str());
         }
       }
     }
