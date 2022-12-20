@@ -13,7 +13,7 @@
 #include <vulkan/vulkan.h>
 
 #include "pdm_platforms_ui/pdm/ui/pdm_debug_comps.hpp"
-#include "pdm_helpers.hpp"
+#include "pdm_platforms_ui/pdm/handler/pdm_helpers.hpp"
 #include "pdm_platforms_ui/pdm/themes/pdm_themes.hpp"
 #include "pdm_platforms_ui/pdm/ui/pdm_menus.hpp"
 #include "pdm.h"
@@ -624,10 +624,9 @@ int main(int, char**)
     PDM::Components::crypto_test(pdm);
     ImGui::End();
     //Signin
-    ImGui::Begin("Signin");
-    PDM::Components::signin_popup(pdm);
-
-    ImGui::End();
+//    ImGui::Begin("Signin");
+//    PDM::Components::signin_popup(pdm);
+//    ImGui::End();
 
     // Docking test windows
 

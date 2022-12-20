@@ -2,10 +2,10 @@
 // Created by Mike Yang on 11/20/2022.
 //
 
-#include "pdm_database.h"
-#include "pdm_status.h"
+#include "pdm_platforms_ui/pdm/handler/pdm_database.h"
+#include "pdm_platforms_ui/pdm/handler/pdm_status.h"
 #include "pdm_ui_control.hpp"
-#include "pdm_net.h"
+#include "pdm_platforms_ui/pdm/handler/pdm_net.h"
 
 #pragma once
 

@@ -6,13 +6,19 @@
 #define PDM_PLATFORMS_UI_PDM_NET_H
 
 #include <string>
-#include <nlohmann/json.hpp>
+#include "pdm_platforms_ui/pdm/lib/json/single_include/nlohmann/json.hpp"
 #include <map>
 #include "pdm-network.h"
 
+struct NetObj:NetWriter {
+  std::string readptr;
+  size_t sizeleft;
+  nlohmann::json js;
+};
 namespace PDM {
 
   class network {
+    using json = nlohmann::json;
   public:
     struct notes{
       const std::string GetHeadsType = "heads";
@@ -27,10 +33,11 @@ namespace PDM {
       const std::string signupURL = pdmRootURL + "/auth/signup";
       const std::string notesGetHeadsURL = pdmRootURL + "/auth/note";
     };
+
+
     static void post (const std::string& a, const std::string& b, NetWriter* wt);
     template<typename T>
     static std::string get_json (std::map<T,T>&a) {
-      using json = nlohmann::json;
       json j(a);
       std::string signin_data =to_string(j);
       return std::move(signin_data);
@@ -43,7 +50,8 @@ namespace PDM {
 
     const actions actions;
     const notes notes;
-    struct NetWriter wt;
+    struct NetObj wt; // store the most recent return callback
+
   private:
 //    pdm_network net;
   };

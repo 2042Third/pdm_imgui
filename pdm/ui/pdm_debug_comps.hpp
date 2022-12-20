@@ -1,8 +1,9 @@
 
 #include "imgui.h"
 #include "pdm.h" // PDM::Runtime
-#include "pdm_net.h" // get_json()
+#include "pdm_platforms_ui/pdm/handler/pdm_net.h" // get_json()
 #include "pdm-network.h"
+#include "handler/pdm_net_type.h"
 
 namespace PDM::Components {
   bool net_debug(PDM::Runtime* rt){
@@ -14,14 +15,15 @@ namespace PDM::Components {
     ImGui::InputText("Email", email, 2048, ImGuiInputTextFlags_CharsNoBlank);
     ImGui::InputText("Password",    password, 2048, 0);
     if (ImGui::Button("login")) {
-      std::map<std::string,std::string> data {{"umail",email},{"upw",password}};
+      std::map<std::string,std::string> data=PDM::pdm_net_type::get_signin_json(email,password);
       j_str = PDM::network::get_json(data);
       rt->signin_action(j_str, &rt->wt);
     }
     ImGui::Separator();
     const float footer_height_to_reserve1 =  ImGui::GetFrameHeightWithSpacing();
     ImGui::PushStyleColor(ImGuiCol_WindowBg,ImGui::GetStyle().Colors[ImGuiCol_Button]); // Change output view color
-    if (ImGui::BeginChild("ServerResponse", ImVec2(0, 100.0f), false, ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_AlwaysVerticalScrollbar)) {
+    if (ImGui::BeginChild("ServerResponse", ImVec2(0, 100.0f), false
+                          , ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_AlwaysVerticalScrollbar)) {
       ImGui::Text("Server Response");
       ImGui::Separator();
       ImGui::InputTextMultiline("##source", ( char*)rt->wt.readptr.c_str(), rt->wt.readptr.size()
@@ -35,7 +37,7 @@ namespace PDM::Components {
     const float footer_height_to_reserve2 =  ImGui::GetFrameHeightWithSpacing();
     if (ImGui::BeginChild("ResponseDetail", ImVec2(0, 100.0f), false, ImGuiWindowFlags_HorizontalScrollbar)) {
       ImGui::Text("Response Detail");
-      ImGui::Text("Response Size: %d", rt->wt.sizeleft);
+      ImGui::Text("Status: %d", rt->wt.js.contains("status"));
     }
     ImGui::EndChild();
     ImGui::Separator();

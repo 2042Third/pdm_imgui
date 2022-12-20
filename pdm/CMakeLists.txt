@@ -4,18 +4,18 @@ add_executable (pdm_ui
     pdm.cpp
     pdm.h
     main.cpp
-    pdm_helpers.hpp
+    handler/pdm_helpers.hpp
     themes/pdm_themes.hpp
-    pdm_databse.cpp
-    pdm_database.h
+    handler/pdm_databse.cpp
+    handler/pdm_database.h
 #    lib/sqlite/sqlite3.c # sqlite
-    pdm_status.h
+    handler/pdm_status.h
     ui/pdm_components.hpp
     pdm_ui_control.hpp
     crypto/pdmCryptoDB.hpp # encrypted database
-    pdm_net.cpp
-    pdm_net.h
-    ui/pdm_debug_comps.hpp)
+    handler/pdm_net.cpp
+    handler/pdm_net.h
+    ui/pdm_debug_comps.hpp handler/pdm_net_type.cpp)
 
 find_library(SECUREMEM_LIB SecureMemory ${CMAKE_CURRENT_SOURCE_DIR}/lib/cryptoSQLite/external/securememorybin/bin)
 
