@@ -7,9 +7,11 @@
 
 #include <string>
 #include <map>
+#include "net_convert.h"
 
 namespace PDM {
-  class pdm_net_type {
+
+  class pdm_net_type: public net_convert {
   public:
     static std::map<std::string,std::string>get_signin_json(const char* email, const char* password);
   };

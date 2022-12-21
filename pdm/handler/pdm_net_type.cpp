@@ -6,6 +6,8 @@
 #include "empp.h"
 
 namespace PDM {
+
+
   std::map<std::string,std::string> pdm_net_type::get_signin_json(const char* email, const char* password){
     std::string ps = password,user_mail = email;
      std::map<std::string,std::string> data
@@ -15,4 +17,5 @@ namespace PDM {
      };
      return std::move(data);
   }
+
 }

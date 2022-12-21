@@ -9,11 +9,13 @@
 #include "pdm_platforms_ui/pdm/lib/json/single_include/nlohmann/json.hpp"
 #include <map>
 #include "pdm-network.h"
+#include "types.h"
 
 struct NetObj:NetWriter {
   std::string readptr;
   size_t sizeleft;
   nlohmann::json js;
+  PDM::UserInfo userinfo;
 };
 namespace PDM {
 
@@ -44,6 +46,7 @@ namespace PDM {
     }
 
     int  signin_action(const std::string&a, NetWriter* wt) ;
+    static void get_userinfo (const json &j,UserInfo& userinfo);
 
     network();
     ~network();
@@ -51,7 +54,6 @@ namespace PDM {
     const actions actions;
     const notes notes;
     struct NetObj wt; // store the most recent network return callback
-
   private:
 //    pdm_network net;
   };

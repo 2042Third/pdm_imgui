@@ -5,6 +5,7 @@
 #include "pdm_net.h"
 #include "pdm_platforms_ui/pdm/lib/json/single_include/nlohmann/json.hpp"
 #include "pdm_platforms_ui/pdm/lib/pdm_network/pdm-network.h"
+#include "net_convert.h"
 #include <iostream>
 
 namespace PDM {
@@ -14,6 +15,8 @@ namespace PDM {
     auto *wt = (struct NetObj *)userp;
     wt->readptr = std::move(std::string(data,nmemb));
     wt->js = json::parse(wt->readptr);
+    std::cout<<"JSON: "<<wt->js<<std::endl;
+    PDM::network::get_userinfo(wt->js,wt->userinfo);
     return nmemb; /* we copied this many bytes */
   }
 
@@ -32,6 +35,10 @@ namespace PDM {
 
   network::~network() {
 
+  }
+
+  void network::get_userinfo(const json &j,UserInfo& userinfo) {
+    PDM::net_convert::convert(j,userinfo);
   }
 
 
