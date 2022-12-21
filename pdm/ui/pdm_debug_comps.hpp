@@ -37,13 +37,13 @@ namespace PDM::Components {
     const float footer_height_to_reserve2 =  ImGui::GetFrameHeightWithSpacing();
     if (ImGui::BeginChild("ResponseDetail", ImVec2(0, 100.0f), false, ImGuiWindowFlags_HorizontalScrollbar)) {
       ImGui::Text("Response Detail");
-      ImGui::Text("Status: %d", rt->wt.js.contains("status"));
-      if (rt->wt.js.contains("status")) {
-        for (auto& [key, value] : rt->wt.js.items()) {
-          if (value) ImGui::Text(" %s ", key.c_str());
+//      ImGui::Text("Status: %d", rt->wt.js.contains("status"));
+//      if (rt->wt.js.contains("status")) {
+//        for (auto& [key, value] : rt->wt.js.items()) {
+//          if (value) ImGui::Text(" %s ", key.c_str());
 //          if (value) ImGui::Text(" %s: %s ", key.c_str(),value.get<std::string>().c_str());
-        }
-      }
+//        }
+//      }
     }
     ImGui::EndChild();
     ImGui::Separator();
