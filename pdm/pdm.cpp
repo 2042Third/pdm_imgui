@@ -9,6 +9,7 @@ namespace PDM {
    * */
   Runtime::Runtime(){
     db = new pdm_database();
+    set_db(db);
   }
   /**
    * Destructor

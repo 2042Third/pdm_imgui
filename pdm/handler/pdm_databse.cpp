@@ -75,7 +75,7 @@ int PDM::pdm_database::execute(char *input) {
   return 1;
 }
 
-int PDM::pdm_database::execute_note_heads(const nlohmann::json&j) {
+int PDM::pdm_database::execute_note_heads(const nlohmann::json&j,const UserInfo&userinfo) {
   sqlite3_stmt* stmt = 0;
   rc = sqlite3_prepare_v2( db, add_note_head.c_str(), -1, &stmt, 0 );
 
@@ -85,12 +85,12 @@ int PDM::pdm_database::execute_note_heads(const nlohmann::json&j) {
   for ( auto&i: j["content"] ) {
     //  Bind-parameter indexing is 1-based.
     rc = sqlite3_bind_int( stmt, 1, atoi(i["noteid"].get<std::string>().c_str()) );
-    rc = sqlite3_bind_int( stmt, 2, atoi(i["userid"].get<std::string>().c_str()) );
-    rc = sqlite3_bind_text( stmt, 3, i["content"].get<std::string>().c_str(), -1, SQLITE_TRANSIENT);
-    rc = sqlite3_bind_text( stmt, 4, i["h"].get<std::string>().c_str(), -1, SQLITE_TRANSIENT);
-    rc = sqlite3_bind_text( stmt, 5, i["intgrh"].get<std::string>().c_str(), -1, SQLITE_TRANSIENT);
+    rc = sqlite3_bind_int( stmt, 2, 0 );
+    rc = sqlite3_bind_text( stmt, 3, "\0", -1, SQLITE_TRANSIENT);
+    rc = sqlite3_bind_text( stmt, 4, j["h"].get<std::string>().c_str(), -1, SQLITE_TRANSIENT);
+    rc = sqlite3_bind_text( stmt, 5, "\0", -1, SQLITE_TRANSIENT);
     rc = sqlite3_bind_int(  stmt, 6, atoi(i["time"].get<std::string>().c_str()) );
-
+    std::cout<<"Queryd --> "<<i<<std::endl;
 //    while ( sqlite3_step( stmt ) == SQLITE_ROW ) { // While query has result-rows.
 //      for ( int colIndex = 0; colIndex < sqlite3_column_count( stmt ); colIndex++ ) {
 //        int result = sqlite3_column_int( stmt, colIndex );

@@ -9,6 +9,7 @@
 #include "sqlite3.h"
 #include "cryptosqlite/cryptosqlite.h"
 #include "nlohmann/json.hpp"
+#include "types.h"
 
 namespace PDM {
 class pdm_database : public Status{
@@ -25,7 +26,7 @@ public:
   int open_db(char* name, char*pas,int pas_size);
   int close_db(char* name);
   int execute(char *input);
-  int execute_note_heads(const nlohmann::json&j);
+  int execute_note_heads(const nlohmann::json&j,const UserInfo&userinfo);
 
   static void reset (return_table* a) {
     a->argc=0;

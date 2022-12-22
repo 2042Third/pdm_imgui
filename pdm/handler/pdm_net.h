@@ -10,13 +10,14 @@
 #include <map>
 #include "pdm-network.h"
 #include "types.h"
+#include "pdm_database.h"
 
 struct NetObj:NetWriter {
   std::string readptr;
   size_t sizeleft;
   nlohmann::json js;
   PDM::UserInfo userinfo;
-
+  PDM::pdm_database * db;
 };
 namespace PDM {
 
@@ -46,17 +47,22 @@ namespace PDM {
       return std::move(signin_data);
     }
 
-    int  signin_action(const std::string&a, NetWriter* wt_in) ;
+    int signin_action(const std::string&a, NetWriter* wt_in) ;
     int note_heads_action (const std::string&a, NetWriter* wt_in) ;
     static void get_userinfo (const json &j,UserInfo& userinfo);
+    static size_t post_callback_heads( char *data, size_t size, size_t nmemb, void *userp);
+    static size_t post_callback_signin( char *data, size_t size, size_t nmemb, void *userp);
 
     network();
     ~network();
+
+    void set_db (pdm_database * a){wt.db = a;}
 
     const actions actions;
     const notes notes;
     struct NetObj wt; // store the most recent network return callback
   private:
+
 //    pdm_network net;
   };
 
