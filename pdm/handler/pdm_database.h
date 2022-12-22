@@ -43,7 +43,7 @@ public:
 
   // Static queries
   const std::string add_note_head = "insert into notes(noteid, userid, content, h, intgrh,time)"
-                                    "values(?,?,?,?,?,?);";
+                                    " values(?,?,?,?,?,?);";
 };
 
 }
