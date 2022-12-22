@@ -624,9 +624,9 @@ int main(int, char**)
     PDM::Components::crypto_test(pdm);
     ImGui::End();
     //Signin
-//    ImGui::Begin("Signin");
+    ImGui::Begin("Signin");
 //    PDM::Components::signin_popup(pdm);
-//    ImGui::End();
+    ImGui::End();
 
     // Docking test windows
 

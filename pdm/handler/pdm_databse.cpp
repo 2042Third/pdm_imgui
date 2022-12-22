@@ -4,6 +4,7 @@
 
 #include "pdm_database.h"
 #include "crypto/pdmCryptoDB.hpp"
+#include "net_convert.h"
 #include <memory>
 #include <string>
 
@@ -90,7 +91,7 @@ int PDM::pdm_database::execute_note_heads(const nlohmann::json&j,const UserInfo&
     rc = sqlite3_bind_text( stmt, 4, j["h"].get<std::string>().c_str(), -1, SQLITE_TRANSIENT);
     rc = sqlite3_bind_text( stmt, 5, "\0", -1, SQLITE_TRANSIENT);
     rc = sqlite3_bind_int(  stmt, 6, atoi(i["time"].get<std::string>().c_str()) );
-    rc = sqlite3_bind_text( stmt, 7, i["head"].get<std::string>().c_str(), -1, SQLITE_TRANSIENT);
+    rc = sqlite3_bind_text( stmt, 7, PDM::net_convert::add_str(i,"head").c_str(), -1, SQLITE_TRANSIENT);
     while ( sqlite3_step( stmt ) == SQLITE_ROW ) { // While query has result-rows.
       for ( int colIndex = 0; colIndex < sqlite3_column_count( stmt ); colIndex++ ) {
         int result = sqlite3_column_int( stmt, colIndex );

@@ -109,12 +109,19 @@ namespace PDM::Components {
         {
           if (!ImGui::TableSetColumnIndex(column) && column > 0)
             continue;
-          ImGui::Text("%s", rt->db->current_display_table.argv[row][column].c_str());
+          char cell_name[32];
+          sprintf(cell_name, "##Database Viewer %d %d", row,column);
+          ImGui::PushItemWidth(-1);
+          // push color on odd number
+          if(row%2)ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::ColorConvertU32ToFloat4(Spectrum::Dark::GRAY200));
+          ImGui::InputText(cell_name, (char*)rt->db->current_display_table.argv[row][column].c_str()
+                           , rt->db->current_display_table.argv[row][column].size(), ImGuiInputTextFlags_ReadOnly);
+          if(row%2)ImGui::PopStyleColor(); // pop color
+          ImGui::PopItemWidth();
         }
       }
       ImGui::EndTable();
     }
-
     return true;
   }
 
