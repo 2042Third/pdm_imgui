@@ -91,7 +91,7 @@ namespace PDM::Components {
     }
     static size_t table_size=0; table_size = rt->db->current_display_table.argv.size();
     ImVec2 outer_size = ImVec2(0.0f, ImGui::GetTextLineHeightWithSpacing() * 8);
-
+    static int head_loc = -1;
     if (ImGui::BeginTable("table_scrollx", rt->db->current_display_table.argc, flags, outer_size))
     {
       ImGui::TableSetupScrollFreeze(freeze_cols, freeze_rows);
@@ -100,6 +100,9 @@ namespace PDM::Components {
           ImGui::TableSetupColumn(rt->db->current_display_table.col_name[i].c_str(), ImGuiTableColumnFlags_NoHide);
         else
           ImGui::TableSetupColumn(rt->db->current_display_table.col_name[i].c_str());
+        if(!strcmp(rt->db->current_display_table.col_name[i].c_str(),"head")) {
+          head_loc = i;
+        }
       }
       ImGui::TableHeadersRow();
       for (int row = 0; row < table_size; row++)
@@ -119,13 +122,13 @@ namespace PDM::Components {
           if(row%2)ImGui::PopStyleColor(); // pop color
           ImGui::PopItemWidth();
         }
-//        if () {
-        char cell_button[32];
-        sprintf(cell_button, "Decrypt head %d ", row);
-        if (ImGui::Button("Add To Local Database")) {
+        if (head_loc != -1) {
+          char cell_button[32];
+          sprintf(cell_button, "Decrypt head %d ", row);
+          if (ImGui::Button(cell_button)) {
 
+          }
         }
-//        }
       }
       ImGui::EndTable();
     }
