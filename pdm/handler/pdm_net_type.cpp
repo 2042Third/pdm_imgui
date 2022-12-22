@@ -18,4 +18,18 @@ namespace PDM {
      return std::move(data);
   }
 
+  std::map<std::string, std::string> pdm_net_type::get_note_heads(const std::string&sess,
+                                                                 const std::string&email,
+                                                                 const std::string& ntype) {
+    std::map<std::string,std::string> data
+        {
+             {"username" , "" }
+            ,{"content"  , "" }
+            ,{"sess"     , sess }
+            ,{"ntype"    , ntype }
+            ,{"email"    , email }
+        };
+    return std::move(data);
+  }
+
 }

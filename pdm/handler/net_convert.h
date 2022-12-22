@@ -16,8 +16,9 @@ namespace PDM {
     using json = nlohmann::json;
   public:
     static int convert(const json &j,UserInfo& userinfo);
-    static int exists (const json& j, const std::string & a){
-      return j.find(a) != j.end();}
+    static int convert(const json &j,NoteHead& notehead);
+    static int convert(const json &j,NoteMsg& notemsg);
+    static int exists (const json& j, const std::string & a){return j.find(a) != j.end();}
     static std::string add_str (const json& j, const std::string & a);
     static uint32_t add_number (const json& j, const std::string & a);
     static std::string add_bool (const json& j, const std::string & a);

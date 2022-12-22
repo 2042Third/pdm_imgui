@@ -37,7 +37,7 @@ namespace PDM {
     };
 
 
-    static void post (const std::string& a, const std::string& b, NetWriter* wt);
+    static void post (const std::string& a, const std::string& b, NetWriter* wt,size_t callback(char *,size_t,size_t,void *));
     template<typename T>
     static std::string get_json (std::map<T,T>&a) {
       json j(a);
@@ -45,7 +45,8 @@ namespace PDM {
       return std::move(signin_data);
     }
 
-    int  signin_action(const std::string&a, NetWriter* wt) ;
+    int  signin_action(const std::string&a, NetWriter* wt_in) ;
+    int note_heads_action (const std::string&a, NetWriter* wt_in) ;
     static void get_userinfo (const json &j,UserInfo& userinfo);
 
     network();

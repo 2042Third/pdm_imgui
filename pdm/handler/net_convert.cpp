@@ -19,7 +19,7 @@ namespace PDM {
     userinfo.statusInfo          = add_str(j,"statusInfo");
     userinfo.receiverstring      = add_str(j,"receiver"); // using receiver
     userinfo.authdata            = add_str(j,"authdata");
-    userinfo.time                = add_number(j,"time");
+    userinfo.time                = atoi(add_str(j,"time").c_str());
     userinfo.update_time         = add_number(j,"update_time");
     userinfo.utime               = add_str(j,"utime");
     userinfo.pdmSecurityVersion  = add_str(j,"pdmSecurityVersion");
@@ -29,10 +29,22 @@ namespace PDM {
     return 1;
   }
 
+  int net_convert::convert(const json &j, NoteHead &notehead) {
+    notehead.head         = add_str(j,"head");
+    notehead.note_id      = add_str(j,"note_id");
+    notehead.uid          = add_number(j,"uid");
+    notehead.time         = add_number(j,"time");
+    notehead.update_time  = add_number(j,"update_time");
+    notehead.utime        = add_str(j,"utime");
+    notehead.ctime        = add_str(j,"ctime");
+    notehead.key          = add_number(j,"key");
+    return 0;
+  }
+
   uint32_t net_convert::add_number(const json &j, const std::string &a) {
     try {
       if (exists(j, a)) {
-        std::cout<<"Adding: "<<a<<" as "<< j[a]<<std::endl;
+        std::cout<<"Adding number: "<<a<<" as "<< j[a]<<std::endl;
         if (!j[a].is_null()) {
           return j[a].get<int>();
         }
@@ -72,4 +84,6 @@ namespace PDM {
     }
     return "none";
   }
+
+
 }

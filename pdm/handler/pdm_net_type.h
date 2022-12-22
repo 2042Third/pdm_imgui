@@ -14,6 +14,7 @@ namespace PDM {
   class pdm_net_type: public net_convert {
   public:
     static std::map<std::string,std::string>get_signin_json(const char* email, const char* password);
+    static std::map<std::string,std::string>get_note_heads(const std::string&sess, const std::string&email, const std::string& ntype);
   };
 }
 

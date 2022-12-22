@@ -19,6 +19,12 @@ namespace PDM::Components {
       j_str = PDM::network::get_json(data);
       rt->signin_action(j_str, &rt->wt);
     }
+    if (ImGui::Button("Note Heads")) {
+      std::map<std::string,std::string> data=
+          PDM::pdm_net_type::get_note_heads(rt->wt.userinfo.sess,rt->wt.userinfo.email,rt->notes.GetHeadsType);
+      j_str = PDM::network::get_json(data);
+      rt->note_heads_action(j_str, &rt->wt);
+    }
     ImGui::Separator();
     const float footer_height_to_reserve1 =  ImGui::GetFrameHeightWithSpacing();
     ImGui::PushStyleColor(ImGuiCol_WindowBg,ImGui::GetStyle().Colors[ImGuiCol_Button]); // Change output view color
@@ -37,13 +43,9 @@ namespace PDM::Components {
     const float footer_height_to_reserve2 =  ImGui::GetFrameHeightWithSpacing();
     if (ImGui::BeginChild("ResponseDetail", ImVec2(0, 100.0f), false, ImGuiWindowFlags_HorizontalScrollbar)) {
       ImGui::Text("Response Detail");
-//      ImGui::Text("Status: %d", rt->wt.js.contains("status"));
-//      if (rt->wt.js.contains("status")) {
-//        for (auto& [key, value] : rt->wt.js.items()) {
-//          if (value) ImGui::Text(" %s ", key.c_str());
-//          if (value) ImGui::Text(" %s: %s ", key.c_str(),value.get<std::string>().c_str());
-//        }
-//      }
+      ImGui::Text("Status: %s", rt->wt.userinfo.status.c_str());
+      ImGui::Text("Session key: %s", rt->wt.userinfo.sess.c_str());
+
     }
     ImGui::EndChild();
     ImGui::Separator();
