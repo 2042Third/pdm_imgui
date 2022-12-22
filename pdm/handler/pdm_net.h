@@ -16,6 +16,7 @@ struct NetObj:NetWriter {
   size_t sizeleft;
   nlohmann::json js;
   PDM::UserInfo userinfo;
+
 };
 namespace PDM {
 

@@ -8,6 +8,7 @@
 #include "pdm_status.h"
 #include "sqlite3.h"
 #include "cryptosqlite/cryptosqlite.h"
+#include "nlohmann/json.hpp"
 
 namespace PDM {
 class pdm_database : public Status{
@@ -24,6 +25,7 @@ public:
   int open_db(char* name, char*pas,int pas_size);
   int close_db(char* name);
   int execute(char *input);
+  int execute_note_heads(const nlohmann::json&j);
 
   static void reset (return_table* a) {
     a->argc=0;
@@ -38,6 +40,9 @@ public:
   return_table current_display_table;
   std::string last_command ;
 
+  // Static queries
+  const std::string add_note_head = "insert into notes(noteid, userid, content, h, intgrh,time)"
+                                    "values(?,?,?,?,?,?);";
 };
 
 }

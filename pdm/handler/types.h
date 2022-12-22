@@ -55,6 +55,8 @@ namespace PDM {
     std::string encry;
     std::string hash;
   };
-
+  struct NoteHeads {
+    std::vector<NoteHead> v;
+  };
 }
 #endif //PDM_PLATFORMS_UI_TYPES_H

@@ -24,7 +24,10 @@ namespace PDM {
     wt->readptr = std::move(std::string(data,nmemb));
     wt->js = json::parse(wt->readptr);
     std::cout<<"JSON: "<<wt->js<<std::endl;
-//    PDM::network::get_userinfo(wt->js,wt->userinfo);
+    for ( auto&i: wt->js["content"] ) {
+      std::cout<<"Cout: "<<i<<std::endl;
+      std::cout<<"\t "<<i["note_id"].get<std::string>()<<std::endl;
+    }
     return nmemb; /* we copied this many bytes */
   }
 

@@ -25,6 +25,13 @@ namespace PDM::Components {
       j_str = PDM::network::get_json(data);
       rt->note_heads_action(j_str, &rt->wt);
     }
+    ImGui::SameLine();
+    if (ImGui::Button("Add To Local Database")) {
+      std::map<std::string,std::string> data=
+          PDM::pdm_net_type::get_note_heads(rt->wt.userinfo.sess,rt->wt.userinfo.email,rt->notes.GetHeadsType);
+      j_str = PDM::network::get_json(data);
+      rt->note_heads_action(j_str, &rt->wt);
+    }
     ImGui::Separator();
     const float footer_height_to_reserve1 =  ImGui::GetFrameHeightWithSpacing();
     ImGui::PushStyleColor(ImGuiCol_WindowBg,ImGui::GetStyle().Colors[ImGuiCol_Button]); // Change output view color
