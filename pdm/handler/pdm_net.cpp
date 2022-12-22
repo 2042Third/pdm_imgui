@@ -15,7 +15,6 @@ namespace PDM {
     auto *wt = (struct NetObj *)userp;
     wt->readptr = std::move(std::string(data,nmemb));
     wt->js = json::parse(wt->readptr);
-    std::cout<<"JSON: "<<wt->js<<std::endl;
     PDM::network::get_userinfo(wt->js,wt->userinfo);
     return nmemb; /* we copied this many bytes */
   }
@@ -23,10 +22,6 @@ namespace PDM {
     auto *wt = (struct NetObj *)userp;
     wt->readptr = std::move(std::string(data,nmemb));
     wt->js = json::parse(wt->readptr);
-    std::cout<<"JSON: "<<wt->js<<std::endl;
-    for ( auto&i: wt->js["content"] ) {
-      std::cout<<"pre-query: "<<i<<std::endl;
-    }
     wt->db->execute_note_heads(wt->js, wt->userinfo);
     return nmemb; /* we copied this many bytes */
   }
