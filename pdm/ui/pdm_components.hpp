@@ -119,6 +119,13 @@ namespace PDM::Components {
           if(row%2)ImGui::PopStyleColor(); // pop color
           ImGui::PopItemWidth();
         }
+//        if () {
+        char cell_button[32];
+        sprintf(cell_button, "Decrypt head %d ", row);
+        if (ImGui::Button("Add To Local Database")) {
+
+        }
+//        }
       }
       ImGui::EndTable();
     }
