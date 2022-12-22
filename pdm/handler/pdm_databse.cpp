@@ -83,36 +83,33 @@ int PDM::pdm_database::execute_note_heads(const nlohmann::json&j) {
   rc = sqlite3_exec( db, "BEGIN TRANSACTION", 0, 0, 0 );
 
   for ( auto&i: j["content"] ) {
-    //  Binding integer values in this example.
-    //  Bind functions for other data-types are available - see end of post.
-
     //  Bind-parameter indexing is 1-based.
-    rc = sqlite3_bind_int( stmt, 1, int_you_wish_to_bind ); // Bind first parameter.
-    rc = sqlite3_bind_int( stmt, 2, int_you_wish_to_bind ); // Bind second parameter.
+    rc = sqlite3_bind_int( stmt, 1, atoi(i["noteid"].get<std::string>().c_str()) );
+    rc = sqlite3_bind_int( stmt, 2, atoi(i["userid"].get<std::string>().c_str()) );
+    rc = sqlite3_bind_text( stmt, 3, i["content"].get<std::string>().c_str(), -1, SQLITE_TRANSIENT);
+    rc = sqlite3_bind_text( stmt, 4, i["h"].get<std::string>().c_str(), -1, SQLITE_TRANSIENT);
+    rc = sqlite3_bind_text( stmt, 5, i["intgrh"].get<std::string>().c_str(), -1, SQLITE_TRANSIENT);
+    rc = sqlite3_bind_int(  stmt, 6, atoi(i["time"].get<std::string>().c_str()) );
 
-    //  Reading interger results in this example.
-    //  Read functions for other data-types are available - see end of post.
-    while ( sqlite3_step( stmt ) == SQLITE_ROW ) { // While query has result-rows.
-      //  In your example the column count will be 1.
-      for ( int colIndex = 0; colIndex < sqlite3_column_count( stmt ); colIndex++ ) {
-        int result = sqlite3_column_int( stmt, colIndex );
-        //  Do something with the result.
-      }
-    }
+//    while ( sqlite3_step( stmt ) == SQLITE_ROW ) { // While query has result-rows.
+//      for ( int colIndex = 0; colIndex < sqlite3_column_count( stmt ); colIndex++ ) {
+//        int result = sqlite3_column_int( stmt, colIndex );
+//      }
+//    }
     //  Step, Clear and Reset the statement after each bind.
     rc = sqlite3_step( stmt );
     rc = sqlite3_clear_bindings( stmt );
     rc = sqlite3_reset( stmt );
   }
   char *zErrMsg = 0;  //  Can perhaps display the error message if rc != SQLITE_OK.
-  rc = sqlite3_exec( conn, "END TRANSACTION", 0, 0, &zErrMsg );   //  End the transaction.
+  rc = sqlite3_exec( db, "END TRANSACTION", 0, 0, &zErrMsg );   //  End the transaction.
   if( rc!=SQLITE_OK ){
     change(PDM::Status::PDM_ERROR);
     fprintf(stderr, "SQL error: %s\n", zErrMsg);
     sqlite3_free(zErrMsg);
     return 0;
   }
-  rc = sqlite3_finalize( stmt );  //  Finalize the prepared statement.
+  rc = sqlite3_finalize( stmt );  //  Clean up the statements
 
   return 0;
 }
