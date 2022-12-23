@@ -90,9 +90,8 @@ namespace PDM::Components {
       return true;
     }
     static size_t table_size=0; table_size = rt->db->current_display_table.argv.size();
-    ImVec2 outer_size = ImVec2(0.0f, ImGui::GetTextLineHeightWithSpacing() * 8);
     static int head_loc = -1;
-    if (ImGui::BeginTable("table_scrollx", rt->db->current_display_table.argc, flags, outer_size))
+    if (ImGui::BeginTable("table_scrollx", rt->db->current_display_table.argc, flags))
     {
       ImGui::TableSetupScrollFreeze(freeze_cols, freeze_rows);
       for (int i=0;i<table_width;i++){
