@@ -1,7 +1,9 @@
 //
 // Created by Mike Yang on 11/20/2022.
 //
-
+#pragma once
+#ifndef PDM_PLATFORMS_THEMES_PDM_THEMES_HPP
+#define PDM_PLATFORMS_THEMES_PDM_THEMES_HPP
 #include "imgui.h"
 #define SPECTRUM_USE_LIGHT_THEME
 
@@ -505,4 +507,4 @@ namespace PDM {
     colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.20f, 0.20f, 0.20f, 0.35f);
   }
 } // PDM
-
+#endif // PDM_PLATFORMS_THEMES_PDM_THEMES_HPP

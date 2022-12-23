@@ -10,6 +10,7 @@
 #include "empp.h"
 #include "cc20_multi.h"
 #include "misc/base64.h"
+#include "themes/pdm_colors.h"
 
 // STATIC
 namespace PDM::Components {
@@ -118,9 +119,9 @@ namespace PDM::Components {
           sprintf(cell_name, "##Database Viewer %d %d", row,column);
           ImGui::PushItemWidth(-1);
           // push color on odd number
-          if(row%2)ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::ColorConvertU32ToFloat4(Spectrum::Dark::GRAY200));
+          if(row%2)ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::ColorConvertU32ToFloat4(PDM::THEME::COLOR::Dark::GRAY200));
           ImGui::InputText(cell_name, (char*)rt->db->current_display_table.argv[row][column].c_str()
-                           , rt->db->current_display_table.argv[row][column].size(), ImGuiInputTextFlags_ReadOnly);
+                           , rt->db->current_display_table.argv[row][column].size());
           if(row%2)ImGui::PopStyleColor(); // pop color
           ImGui::PopItemWidth();
         }
@@ -264,28 +265,26 @@ namespace PDM::Components {
           static std::string  s_ps, enc, dec;
           const int max_input = 4096;
           static char input_buf[max_input+1], ps_buf[max_input+1];
-          ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::ColorConvertU32ToFloat4(Spectrum::Dark::GRAY200)); // push color
           ImGui::Text("Input: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##Outputinput_buf", input_buf, strlen(input_buf), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##Outputinput_buf", input_buf, strlen(input_buf));
 
           ImGui::Text("Password: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##OutputPassword", ps_buf, strlen(ps_buf), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##OutputPassword", ps_buf, strlen(ps_buf));
 
           ImGui::Text("Password Scrypt: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##OutputScrypt", ( char*)s_ps.c_str(), s_ps.size(), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##OutputScrypt", ( char*)s_ps.c_str(), s_ps.size());
 
           ImGui::Text("Output: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##Outputenc",  ( char*)enc.c_str(), enc.size(), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##Outputenc",  ( char*)enc.c_str(), enc.size());
 
           ImGui::Text("Output Decrypted: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##Outputdec",  ( char*)dec.c_str(), dec.size(), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##Outputdec",  ( char*)dec.c_str(), dec.size());
 
-          ImGui::PopStyleColor(); // pop color
 
           ImGui::InputText("Input",    input_buf, max_input, 0);
           ImGui::InputText("Password",    ps_buf, max_input, 0);
@@ -303,20 +302,18 @@ namespace PDM::Components {
           static std::string  s_ps, hash, d_hash, i_buf;
           const int max_input = 4096;
           static char input_buf[max_input+1], ps_buf[max_input+1];
-          ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::ColorConvertU32ToFloat4(Spectrum::Dark::GRAY200)); // push color
 
           ImGui::Text("Scrypt: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##OutputScrypt", ( char*)s_ps.c_str(), s_ps.size(), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##OutputScrypt", ( char*)s_ps.c_str(), s_ps.size());
 
           ImGui::Text("SHA3-hash: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##OutputHash", ( char*)hash.c_str(), hash.size(), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##OutputHash", ( char*)hash.c_str(), hash.size());
 
           ImGui::Text("Double SHA3-hash: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##OutputDHash", ( char*)d_hash.c_str(), d_hash.size(), ImGuiInputTextFlags_ReadOnly);
-          ImGui::PopStyleColor(); // pop color
+          ImGui::SingleLineSelectableText("##OutputDHash", ( char*)d_hash.c_str(), d_hash.size());
 
           ImGui::InputText("Input",    input_buf, max_input, 0);
           if(ImGui::Button("Done") || (ImGui::IsWindowFocused()&&ImGui::IsKeyReleased(ImGuiKey_Enter) )){
@@ -332,28 +329,26 @@ namespace PDM::Components {
           static std::string  s_ps, enc, dec;
           const int max_input = 4096;
           static char input_buf[max_input+1], ps_buf[max_input+1];
-          ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::ColorConvertU32ToFloat4(Spectrum::Dark::GRAY200)); // push color
           ImGui::Text("Input: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##Outputinput_buf", input_buf, strlen(input_buf), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##Outputinput_buf", input_buf, strlen(input_buf));
 
           ImGui::Text("Password: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##OutputPassword", ps_buf, strlen(ps_buf), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##OutputPassword", ps_buf, strlen(ps_buf));
 
           ImGui::Text("Password Scrypt: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##OutputScrypt", ( char*)s_ps.c_str(), s_ps.size(), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##OutputScrypt", ( char*)s_ps.c_str(), s_ps.size());
 
           ImGui::Text("Output: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##Outputenc",  ( char*)enc.c_str(), enc.size(), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##Outputenc",  ( char*)enc.c_str(), enc.size());
 
           ImGui::Text("Output Decrypted: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##Outputdec",  ( char*)dec.c_str(), dec.size(), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##Outputdec",  ( char*)dec.c_str(), dec.size());
 
-          ImGui::PopStyleColor(); // pop color
 
           ImGui::InputText("Input",    input_buf, max_input, 0);
           ImGui::InputText("Password",    ps_buf, max_input, 0);
@@ -371,20 +366,18 @@ namespace PDM::Components {
           static std::string  s_ps, dec;
           const int max_input = 4096;
           static char input_buf[max_input+1], ps_buf[max_input+1];
-          ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::ColorConvertU32ToFloat4(Spectrum::Dark::GRAY200)); // push color
           ImGui::Text("Input: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##Outputinput_buf", input_buf, strlen(input_buf), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##Outputinput_buf", input_buf, strlen(input_buf));
 
           ImGui::Text("Password: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##OutputPassword", ps_buf, strlen(ps_buf), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##OutputPassword", ps_buf, strlen(ps_buf));
 
           ImGui::Text("Output Decrypted: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##Outputdec",  ( char*)dec.c_str(), dec.size(), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##Outputdec",  ( char*)dec.c_str(), dec.size());
 
-          ImGui::PopStyleColor(); // pop color
 
           ImGui::InputText("Encrypted Input",    input_buf, max_input, 0);
           ImGui::InputText("Password",    ps_buf, max_input, 0);
@@ -403,29 +396,27 @@ namespace PDM::Components {
 
           static std::string base64, base64url, hax, sha3;
 
-          ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::ColorConvertU32ToFloat4(Spectrum::Dark::GRAY200)); // push color
 
           ImGui::Text("Input: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##inputbbuf", input_buf, strlen(input_buf), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##inputbbuf", input_buf, strlen(input_buf));
 
           ImGui::Text("Base64: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##base64buf", base64.data(), base64.size(), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##base64buf", base64.data(), base64.size());
 
           ImGui::Text("Base64 (url): ");
           ImGui::SameLine(150);
-          ImGui::InputText("##base64bufurl", base64url.data(), base64url.size(), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##base64bufurl", base64url.data(), base64url.size());
 
           ImGui::Text("Hax: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##haxbuff", hax.data(), hax.size(), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##haxbuff", hax.data(), hax.size());
 
           ImGui::Text("Sha3: ");
           ImGui::SameLine(150);
-          ImGui::InputText("##sha3buff", sha3.data(), sha3.size(), ImGuiInputTextFlags_ReadOnly);
+          ImGui::SingleLineSelectableText("##sha3buff", sha3.data(), sha3.size());
 
-          ImGui::PopStyleColor();
 
           ImGui::InputText("Input",    input_buf, max_input, 0);
           if(ImGui::Button("Done") || (ImGui::IsWindowFocused()&&ImGui::IsKeyReleased(ImGuiKey_Enter) )){
