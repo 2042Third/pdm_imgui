@@ -86,7 +86,7 @@ int PDM::pdm_database::execute_note_heads(const nlohmann::json&j,const UserInfo&
   for ( auto&i: j["content"] ) {
     //  Bind-parameter indexing is 1-based.
     rc = sqlite3_bind_int( stmt, 1, atoi(i["note_id"].get<std::string>().c_str()) );
-    rc = sqlite3_bind_int( stmt, 2, 0 );
+    rc = sqlite3_bind_text( stmt, 2, userinfo.email.c_str(), -1, SQLITE_TRANSIENT );
     rc = sqlite3_bind_text( stmt, 3, "\0", -1, SQLITE_TRANSIENT);
     rc = sqlite3_bind_text( stmt, 4, j["h"].get<std::string>().c_str(), -1, SQLITE_TRANSIENT);
     rc = sqlite3_bind_text( stmt, 5, "\0", -1, SQLITE_TRANSIENT);

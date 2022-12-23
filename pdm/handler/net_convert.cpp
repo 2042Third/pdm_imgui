@@ -44,7 +44,7 @@ namespace PDM {
   uint32_t net_convert::add_number(const json &j, const std::string &a) {
     try {
       if (exists(j, a)) {
-        std::cout<<"Adding number: "<<a<<" as "<< j[a]<<std::endl;
+//        std::cout<<"Adding number: "<<a<<" as "<< j[a]<<std::endl;
         if (!j[a].is_null()) {
           return j[a].get<int>();
         }
@@ -59,7 +59,7 @@ namespace PDM {
   std::string net_convert::add_str(const json &j, const std::string &a) {
     try {
       if (exists(j,a)) {
-        std::cout<<"Adding: "<<a<<" as "<< j[a]<<std::endl;
+//        std::cout<<"Adding: "<<a<<" as "<< j[a]<<std::endl;
         if(!j[a].is_null()){
           return j[a].get<std::string>();
         }
@@ -73,7 +73,7 @@ namespace PDM {
   std::string net_convert::add_bool (const json& j, const std::string & a){
     try {
       if (exists(j,a)) {
-        std::cout<<"Adding: "<<a<<" as "<< j[a]<<std::endl;
+//        std::cout<<"Adding: "<<a<<" as "<< j[a]<<std::endl;
         if(!j[a].is_null()){
           return j[a].get<bool>()?"success":"none";
         }

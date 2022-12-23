@@ -42,7 +42,7 @@ public:
   std::string last_command ;
 
   // Static queries
-  const std::string add_note_head = "insert or replace into notes(noteid, userid, content, h, intgrh,time, head)"
+  const std::string add_note_head = "insert or replace into notes(noteid, useremail, content, h, intgrh,time, head)"
                                     " values(?,?,?,?,?,?,?);";
 };
 
