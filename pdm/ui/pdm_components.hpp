@@ -292,10 +292,75 @@ namespace PDM::Components {
           ImGui::EndTabItem();
           // End Hash & Scrypt
         }
-        if (ImGui::BeginTabItem("Cucumber"))
+        if (ImGui::BeginTabItem("Encryption Embedded"))
         {
-          ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
+          static std::string  s_ps, enc, dec;
+          const int max_input = 4096;
+          static char input_buf[max_input+1], ps_buf[max_input+1];
+          ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::ColorConvertU32ToFloat4(Spectrum::Dark::GRAY200)); // push color
+          ImGui::Text("Input: ");
+          ImGui::SameLine(150);
+          ImGui::InputText("##Outputinput_buf", input_buf, strlen(input_buf), ImGuiInputTextFlags_ReadOnly);
+
+          ImGui::Text("Password: ");
+          ImGui::SameLine(150);
+          ImGui::InputText("##OutputPassword", ps_buf, strlen(ps_buf), ImGuiInputTextFlags_ReadOnly);
+
+          ImGui::Text("Password Scrypt: ");
+          ImGui::SameLine(150);
+          ImGui::InputText("##OutputScrypt", ( char*)s_ps.c_str(), s_ps.size(), ImGuiInputTextFlags_ReadOnly);
+
+          ImGui::Text("Output: ");
+          ImGui::SameLine(150);
+          ImGui::InputText("##Outputenc",  ( char*)enc.c_str(), enc.size(), ImGuiInputTextFlags_ReadOnly);
+
+          ImGui::Text("Output Decrypted: ");
+          ImGui::SameLine(150);
+          ImGui::InputText("##Outputdec",  ( char*)dec.c_str(), dec.size(), ImGuiInputTextFlags_ReadOnly);
+
+          ImGui::PopStyleColor(); // pop color
+
+          ImGui::InputText("Input",    input_buf, max_input, 0);
+          ImGui::InputText("Password",    ps_buf, max_input, 0);
+          if(ImGui::Button("Done") || (ImGui::IsWindowFocused()&&ImGui::IsKeyReleased(ImGuiKey_Enter) )){
+            ps = ps_buf;
+            input = input_buf;
+            s_ps = ps_buf;
+            enc = loader_check(s_ps, input);
+            dec = loader_out(s_ps, enc);
+          }
           ImGui::EndTabItem();
+          // Encryption Embedded
+        }
+        if (ImGui::BeginTabItem("Decrypt Only Embedded"))
+        {
+          static std::string  s_ps, dec;
+          const int max_input = 4096;
+          static char input_buf[max_input+1], ps_buf[max_input+1];
+          ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::ColorConvertU32ToFloat4(Spectrum::Dark::GRAY200)); // push color
+          ImGui::Text("Input: ");
+          ImGui::SameLine(150);
+          ImGui::InputText("##Outputinput_buf", input_buf, strlen(input_buf), ImGuiInputTextFlags_ReadOnly);
+
+          ImGui::Text("Password: ");
+          ImGui::SameLine(150);
+          ImGui::InputText("##OutputPassword", ps_buf, strlen(ps_buf), ImGuiInputTextFlags_ReadOnly);
+
+          ImGui::Text("Output Decrypted: ");
+          ImGui::SameLine(150);
+          ImGui::InputText("##Outputdec",  ( char*)dec.c_str(), dec.size(), ImGuiInputTextFlags_ReadOnly);
+
+          ImGui::PopStyleColor(); // pop color
+
+          ImGui::InputText("Encrypted Input",    input_buf, max_input, 0);
+          ImGui::InputText("Password",    ps_buf, max_input, 0);
+          if(ImGui::Button("Done") || (ImGui::IsWindowFocused()&&ImGui::IsKeyReleased(ImGuiKey_Enter) )){
+            input = input_buf;
+            s_ps = ps_buf;
+            dec = loader_out(s_ps, input);
+          }
+          ImGui::EndTabItem();
+          // Decrypt Only Embedded
         }
         ImGui::EndTabBar();
       }
