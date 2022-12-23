@@ -121,13 +121,6 @@ namespace PDM::Components {
           if(row%2)ImGui::PopStyleColor(); // pop color
           ImGui::PopItemWidth();
         }
-        if (head_loc != -1) {
-          char cell_button[32];
-          sprintf(cell_button, "Decrypt head %d ", row);
-          if (ImGui::Button(cell_button)) {
-
-          }
-        }
       }
       ImGui::EndTable();
     }
