@@ -82,47 +82,47 @@ namespace PDM::Components {
     return true;
   }
 
-  bool database_viewer (PDM::Runtime* rt) {
-    static ImGuiTableFlags flags = ImGuiTableFlags_ScrollX |ImGuiTableFlags_ScrollY |
-        ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersOuter | ImGuiTableFlags_BordersV |
-        ImGuiTableFlags_Resizable | ImGuiTableFlags_Reorderable | ImGuiTableFlags_Hideable;
+  bool database_viewer(PDM::Runtime *rt) {
+    static ImGuiTableFlags flags = ImGuiTableFlags_ScrollX | ImGuiTableFlags_ScrollY |
+                                   ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersOuter | ImGuiTableFlags_BordersV |
+                                   ImGuiTableFlags_Resizable | ImGuiTableFlags_Reorderable | ImGuiTableFlags_Hideable;
     static int freeze_cols = 1;
     static int freeze_rows = 1;
-    static int table_width=0;table_width = rt->db->current_display_table.argc;
-    if (table_width<=0){
+    static int table_width = 0;
+    table_width = rt->db->current_display_table.argc;
+    if (table_width <= 0) {
       ImGui::Text("No data available");
       return true;
     }
-    static size_t table_size=0; table_size = rt->db->current_display_table.argv.size();
+    static size_t table_size = 0;
+    table_size = rt->db->current_display_table.argv.size();
     static int head_loc = -1;
-    if (ImGui::BeginTable("table_scrollx", rt->db->current_display_table.argc, flags))
-    {
+    if (ImGui::BeginTable("table_scrollx", rt->db->current_display_table.argc, flags)) {
       ImGui::TableSetupScrollFreeze(freeze_cols, freeze_rows);
-      for (int i=0;i<table_width;i++){
-        if(i==0)
+      for (int i = 0; i < table_width; i++) {
+        if (i == 0)
           ImGui::TableSetupColumn(rt->db->current_display_table.col_name[i].c_str(), ImGuiTableColumnFlags_NoHide);
         else
           ImGui::TableSetupColumn(rt->db->current_display_table.col_name[i].c_str());
-        if(!strcmp(rt->db->current_display_table.col_name[i].c_str(),"head")) {
+        if (!strcmp(rt->db->current_display_table.col_name[i].c_str(), "head")) {
           head_loc = i;
         }
       }
       ImGui::TableHeadersRow();
-      for (int row = 0; row < table_size; row++)
-      {
+      for (int row = 0; row < table_size; row++) {
         ImGui::TableNextRow();
-        for (int column = 0; column < table_width; column++)
-        {
+        for (int column = 0; column < table_width; column++) {
           if (!ImGui::TableSetColumnIndex(column) && column > 0)
             continue;
           char cell_name[32];
-          sprintf(cell_name, "##Database Viewer %d %d", row,column);
+          sprintf(cell_name, "##Database Viewer %d %d", row, column);
           ImGui::PushItemWidth(-1);
           // push color on odd number
-          if(row%2)ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::ColorConvertU32ToFloat4(PDM::THEME::COLOR::Dark::GRAY200));
-          ImGui::InputText(cell_name, (char*)rt->db->current_display_table.argv[row][column].c_str()
-                           , rt->db->current_display_table.argv[row][column].size());
-          if(row%2)ImGui::PopStyleColor(); // pop color
+          if (row % 2)
+            ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::ColorConvertU32ToFloat4(PDM::THEME::COLOR::Dark::GRAY200));
+          ImGui::InputText(cell_name, (char *) rt->db->current_display_table.argv[row][column].c_str(),
+                           rt->db->current_display_table.argv[row][column].size());
+          if (row % 2)ImGui::PopStyleColor(); // pop color
           ImGui::PopItemWidth();
         }
       }
@@ -131,11 +131,11 @@ namespace PDM::Components {
     return true;
   }
 
-  bool database_view ( PDM::Runtime* rt){
+  bool database_view(PDM::Runtime *rt) {
 
     static char buf1[2048] = "pdm";
-    static char input[2048] = "", pas[2048]="1234", back_ground_q[30] = "select * from sqlite_schema;";
-    ImGui::Begin("Database debug" , &rt->ui->has_database_debug_window);
+    static char input[2048] = "", pas[2048] = "1234", back_ground_q[30] = "select * from sqlite_schema;";
+    ImGui::Begin("Database debug", &rt->ui->has_database_debug_window);
     ImGui::Text("Database status: ");
     ImGui::SameLine();
     ImGui::Text(rt->db->text_status());
@@ -144,10 +144,10 @@ namespace PDM::Components {
     ImGui::Text(rt->ui->database_current_file_path.data());
 
     ImGui::InputText("Database Name", buf1, 2048, ImGuiInputTextFlags_CharsNoBlank);
-    ImGui::InputText("Password",    pas, 2048, 0);
+    ImGui::InputText("Password", pas, 2048, 0);
     ImGui::Text("Password length: %d", strlen(pas));
     if (ImGui::Button("Open Database")) {
-      rt->db->open_db(buf1,pas, strlen(pas));
+      rt->db->open_db(buf1, pas, strlen(pas));
       rt->ui->database_current_file_path = buf1;
     }
     ImGui::SameLine();
@@ -164,28 +164,28 @@ namespace PDM::Components {
       rt->db->execute(back_ground_q);
     }
 
-    if(ImGui::IsWindowFocused())
+    if (ImGui::IsWindowFocused())
       ImGui::Text("Has focus");
     else
       ImGui::Text("No focus");
 
     // Execute
     static int enter_count = 0;
-    ImGui::Text("Length: %d",strlen(input));
-    ImGui::InputText("Command",    input, 2048, 0);
-    if (ImGui::IsWindowFocused()&&ImGui::IsKeyReleased(ImGuiKey_Enter) ) {
-      if (strlen(input)!=0)
+    ImGui::Text("Length: %d", strlen(input));
+    ImGui::InputText("Command", input, 2048, 0);
+    if (ImGui::IsWindowFocused() && ImGui::IsKeyReleased(ImGuiKey_Enter)) {
+      if (strlen(input) != 0)
         rt->db->execute(input);
       enter_count++;
     }
     // Keyboard actions
-    ImGui::Text("Executed #%d: \"%s\"",enter_count,rt->db->last_command.data());
+    ImGui::Text("Executed #%d: \"%s\"", enter_count, rt->db->last_command.data());
 
-    if(ImGui::Button("Execute SQL Command")){
+    if (ImGui::Button("Execute SQL Command")) {
       rt->db->execute(input);
     }
     ImGui::SameLine();
-    if(ImGui::Button("Clear")){
+    if (ImGui::Button("Clear")) {
       input[0] = '\0';
     }
 
@@ -201,8 +201,8 @@ namespace PDM::Components {
     ImGui::End();
 
     // Children windows
-    if (rt->ui->has_database_debug_window){
-      ImGui::Begin("Database viewer",&rt->ui->database_viewer_closable);
+    if (rt->ui->has_database_debug_window) {
+      ImGui::Begin("Database viewer", &rt->ui->database_viewer_closable);
       database_viewer(rt);
       ImGui::End();
     }
@@ -212,15 +212,12 @@ namespace PDM::Components {
 
 
   // Signin pop up
-  bool signin_popup(PDM::Runtime* rt) {
+  bool signin_popup(PDM::Runtime *rt) {
     if (ImGui::Button("Stacked modals.."))
       ImGui::OpenPopup("Stacked 1");
-    if (ImGui::BeginPopupModal("Stacked 1", NULL, ImGuiWindowFlags_MenuBar))
-    {
-      if (ImGui::BeginMenuBar())
-      {
-        if (ImGui::BeginMenu("File"))
-        {
+    if (ImGui::BeginPopupModal("Stacked 1", NULL, ImGuiWindowFlags_MenuBar)) {
+      if (ImGui::BeginMenuBar()) {
+        if (ImGui::BeginMenu("File")) {
           if (ImGui::MenuItem("Some menu item")) {}
           ImGui::EndMenu();
         }
@@ -230,7 +227,7 @@ namespace PDM::Components {
 
       // Testing behavior of widgets stacking their own regular popups over the modal.
       static int item = 1;
-      static float color[4] = { 0.4f, 0.7f, 0.0f, 0.5f };
+      static float color[4] = {0.4f, 0.7f, 0.0f, 0.5f};
       ImGui::Combo("Combo", &item, "aaaa\0bbbb\0cccc\0dddd\0eeee\0\0");
       ImGui::ColorEdit4("color", color);
 
@@ -241,8 +238,7 @@ namespace PDM::Components {
       // will close the popup. Note that the visibility state of popups is owned by imgui, so the input value
       // of the bool actually doesn't matter here.
       bool unused_open = true;
-      if (ImGui::BeginPopupModal("Stacked 2", &unused_open))
-      {
+      if (ImGui::BeginPopupModal("Stacked 2", &unused_open)) {
         ImGui::Text("Hello from Stacked The Second!");
         if (ImGui::Button("Close"))
           ImGui::CloseCurrentPopup();
@@ -256,15 +252,15 @@ namespace PDM::Components {
     return true;
   }
 
-  bool crypto_test(PDM::Runtime* rt){
+  bool crypto_test(PDM::Runtime *rt) {
     std::string input, ps;
     {
       ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
-      if (ImGui::BeginTabBar("EncryptionTabBar", tab_bar_flags)){
-        if (ImGui::BeginTabItem("Basic Encryption")){
-          static std::string  s_ps, enc, dec;
+      if (ImGui::BeginTabBar("EncryptionTabBar", tab_bar_flags)) {
+        if (ImGui::BeginTabItem("Basic Encryption")) {
+          static std::string s_ps, enc, dec;
           const int max_input = 4096;
-          static char input_buf[max_input+1], ps_buf[max_input+1];
+          static char input_buf[max_input + 1], ps_buf[max_input + 1];
           ImGui::Text("Input: ");
           ImGui::SameLine(150);
           ImGui::SingleLineSelectableText("##Outputinput_buf", input_buf, strlen(input_buf));
@@ -275,20 +271,20 @@ namespace PDM::Components {
 
           ImGui::Text("Password Scrypt: ");
           ImGui::SameLine(150);
-          ImGui::SingleLineSelectableText("##OutputScrypt", ( char*)s_ps.c_str(), s_ps.size());
+          ImGui::SingleLineSelectableText("##OutputScrypt", (char *) s_ps.c_str(), s_ps.size());
 
           ImGui::Text("Output: ");
           ImGui::SameLine(150);
-          ImGui::SingleLineSelectableText("##Outputenc",  ( char*)enc.c_str(), enc.size());
+          ImGui::SingleLineSelectableText("##Outputenc", (char *) enc.c_str(), enc.size());
 
           ImGui::Text("Output Decrypted: ");
           ImGui::SameLine(150);
-          ImGui::SingleLineSelectableText("##Outputdec",  ( char*)dec.c_str(), dec.size());
+          ImGui::SingleLineSelectableText("##Outputdec", (char *) dec.c_str(), dec.size());
 
 
-          ImGui::InputText("Input",    input_buf, max_input, 0);
-          ImGui::InputText("Password",    ps_buf, max_input, 0);
-          if(ImGui::Button("Done") || (ImGui::IsWindowFocused()&&ImGui::IsKeyReleased(ImGuiKey_Enter) )){
+          ImGui::InputText("Input", input_buf, max_input, 0);
+          ImGui::InputText("Password", ps_buf, max_input, 0);
+          if (ImGui::Button("Done") || (ImGui::IsWindowFocused() && ImGui::IsKeyReleased(ImGuiKey_Enter))) {
             ps = ps_buf;
             input = input_buf;
             s_ps = scrypt(ps);
@@ -298,37 +294,37 @@ namespace PDM::Components {
           ImGui::EndTabItem();
           // End Basic Encryption
         }
-        if (ImGui::BeginTabItem("Hash & Scrypt")){
-          static std::string  s_ps, hash, d_hash, i_buf;
+        if (ImGui::BeginTabItem("Hash & Scrypt")) {
+          static std::string s_ps, hash, d_hash, i_buf;
           const int max_input = 4096;
-          static char input_buf[max_input+1], ps_buf[max_input+1];
+          static char input_buf[max_input + 1], ps_buf[max_input + 1];
 
           ImGui::Text("Scrypt: ");
           ImGui::SameLine(150);
-          ImGui::SingleLineSelectableText("##OutputScrypt", ( char*)s_ps.c_str(), s_ps.size());
+          ImGui::SingleLineSelectableText("##OutputScrypt", (char *) s_ps.c_str(), s_ps.size());
 
           ImGui::Text("SHA3-hash: ");
           ImGui::SameLine(150);
-          ImGui::SingleLineSelectableText("##OutputHash", ( char*)hash.c_str(), hash.size());
+          ImGui::SingleLineSelectableText("##OutputHash", (char *) hash.c_str(), hash.size());
 
           ImGui::Text("Double SHA3-hash: ");
           ImGui::SameLine(150);
-          ImGui::SingleLineSelectableText("##OutputDHash", ( char*)d_hash.c_str(), d_hash.size());
+          ImGui::SingleLineSelectableText("##OutputDHash", (char *) d_hash.c_str(), d_hash.size());
 
-          ImGui::InputText("Input",    input_buf, max_input, 0);
-          if(ImGui::Button("Done") || (ImGui::IsWindowFocused()&&ImGui::IsKeyReleased(ImGuiKey_Enter) )){
+          ImGui::InputText("Input", input_buf, max_input, 0);
+          if (ImGui::Button("Done") || (ImGui::IsWindowFocused() && ImGui::IsKeyReleased(ImGuiKey_Enter))) {
             i_buf = input_buf;
             s_ps = scrypt(i_buf);
             hash = get_hash(i_buf);
-            d_hash = get_hash(i_buf+i_buf);
+            d_hash = get_hash(i_buf + i_buf);
           }
           ImGui::EndTabItem();
           // End Hash & Scrypt
         }
-        if (ImGui::BeginTabItem("Encryption Embedded")){
-          static std::string  s_ps, enc, dec;
+        if (ImGui::BeginTabItem("Encryption Embedded")) {
+          static std::string s_ps, enc, dec;
           const int max_input = 4096;
-          static char input_buf[max_input+1], ps_buf[max_input+1];
+          static char input_buf[max_input + 1], ps_buf[max_input + 1];
           ImGui::Text("Input: ");
           ImGui::SameLine(150);
           ImGui::SingleLineSelectableText("##Outputinput_buf", input_buf, strlen(input_buf));
@@ -339,20 +335,20 @@ namespace PDM::Components {
 
           ImGui::Text("Password Scrypt: ");
           ImGui::SameLine(150);
-          ImGui::SingleLineSelectableText("##OutputScrypt", ( char*)s_ps.c_str(), s_ps.size());
+          ImGui::SingleLineSelectableText("##OutputScrypt", (char *) s_ps.c_str(), s_ps.size());
 
           ImGui::Text("Output: ");
           ImGui::SameLine(150);
-          ImGui::SingleLineSelectableText("##Outputenc",  ( char*)enc.c_str(), enc.size());
+          ImGui::SingleLineSelectableText("##Outputenc", (char *) enc.c_str(), enc.size());
 
           ImGui::Text("Output Decrypted: ");
           ImGui::SameLine(150);
-          ImGui::SingleLineSelectableText("##Outputdec",  ( char*)dec.c_str(), dec.size());
+          ImGui::SingleLineSelectableText("##Outputdec", (char *) dec.c_str(), dec.size());
 
 
-          ImGui::InputText("Input",    input_buf, max_input, 0);
-          ImGui::InputText("Password",    ps_buf, max_input, 0);
-          if(ImGui::Button("Done") || (ImGui::IsWindowFocused()&&ImGui::IsKeyReleased(ImGuiKey_Enter) )){
+          ImGui::InputText("Input", input_buf, max_input, 0);
+          ImGui::InputText("Password", ps_buf, max_input, 0);
+          if (ImGui::Button("Done") || (ImGui::IsWindowFocused() && ImGui::IsKeyReleased(ImGuiKey_Enter))) {
             ps = ps_buf;
             input = input_buf;
             s_ps = ps_buf;
@@ -362,10 +358,10 @@ namespace PDM::Components {
           ImGui::EndTabItem();
           // Encryption Embedded
         }
-        if (ImGui::BeginTabItem("Decrypt Only Embedded")){
-          static std::string  s_ps, dec;
+        if (ImGui::BeginTabItem("Decrypt Only Embedded")) {
+          static std::string s_ps, dec;
           const int max_input = 4096;
-          static char input_buf[max_input+1], ps_buf[max_input+1];
+          static char input_buf[max_input + 1], ps_buf[max_input + 1];
           ImGui::Text("Input: ");
           ImGui::SameLine(150);
           ImGui::SingleLineSelectableText("##Outputinput_buf", input_buf, strlen(input_buf));
@@ -376,12 +372,12 @@ namespace PDM::Components {
 
           ImGui::Text("Output Decrypted: ");
           ImGui::SameLine(150);
-          ImGui::SingleLineSelectableText("##Outputdec",  ( char*)dec.c_str(), dec.size());
+          ImGui::SingleLineSelectableText("##Outputdec", (char *) dec.c_str(), dec.size());
 
 
-          ImGui::InputText("Encrypted Input",    input_buf, max_input, 0);
-          ImGui::InputText("Password",    ps_buf, max_input, 0);
-          if(ImGui::Button("Done") || (ImGui::IsWindowFocused()&&ImGui::IsKeyReleased(ImGuiKey_Enter) )){
+          ImGui::InputText("Encrypted Input", input_buf, max_input, 0);
+          ImGui::InputText("Password", ps_buf, max_input, 0);
+          if (ImGui::Button("Done") || (ImGui::IsWindowFocused() && ImGui::IsKeyReleased(ImGuiKey_Enter))) {
             input = input_buf;
             s_ps = ps_buf;
             dec = loader_out(s_ps, input);
@@ -390,9 +386,9 @@ namespace PDM::Components {
           // Decrypt Only Embedded
         }
         if (ImGui::BeginTabItem("Hash & Encodes")) {
-          static std::string  input ;
+          static std::string input;
           const int max_input = 4096;
-          static char input_buf[max_input+1];
+          static char input_buf[max_input + 1];
 
           static std::string base64, base64url, hax, sha3;
 
@@ -418,11 +414,11 @@ namespace PDM::Components {
           ImGui::SingleLineSelectableText("##sha3buff", sha3.data(), sha3.size());
 
 
-          ImGui::InputText("Input",    input_buf, max_input, 0);
-          if(ImGui::Button("Done") || (ImGui::IsWindowFocused()&&ImGui::IsKeyReleased(ImGuiKey_Enter) )){
+          ImGui::InputText("Input", input_buf, max_input, 0);
+          if (ImGui::Button("Done") || (ImGui::IsWindowFocused() && ImGui::IsKeyReleased(ImGuiKey_Enter))) {
             input = input_buf;
             base64 = base64_encode(input);
-            base64url = base64_encode(input,true);
+            base64url = base64_encode(input, true);
             hax = stoh(input);
             sha3 = get_hash(input);
           }

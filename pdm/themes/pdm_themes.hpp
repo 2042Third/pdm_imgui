@@ -487,6 +487,9 @@ namespace PDM {
     colors[ImGuiCol_ButtonHovered] = ColorConvertU32ToFloat4(Spectrum::Dark::GRAY50);
     colors[ImGuiCol_ButtonActive] = ColorConvertU32ToFloat4(Spectrum::Dark::GRAY200);
     colors[ImGuiCol_Header] = ColorConvertU32ToFloat4(Spectrum::Dark::BLUE400);
+    colors[ImGuiCol_Tab] = ColorConvertU32ToFloat4(Spectrum::Dark::GRAY200);
+    colors[ImGuiCol_TabUnfocused] = ColorConvertU32ToFloat4(Spectrum::Dark::GRAY200);
+    colors[ImGuiCol_TabUnfocusedActive] = ColorConvertU32ToFloat4(Spectrum::Dark::GRAY400);
     colors[ImGuiCol_HeaderHovered] = ColorConvertU32ToFloat4(Spectrum::Dark::BLUE500);
     colors[ImGuiCol_HeaderActive] = ColorConvertU32ToFloat4(Spectrum::Dark::BLUE600);
     colors[ImGuiCol_Separator] = ColorConvertU32ToFloat4(Spectrum::Dark::GRAY400);
