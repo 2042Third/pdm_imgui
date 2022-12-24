@@ -11,7 +11,7 @@
 namespace PDM {
   static int callback(void *ptr, int argc, char **argv, char **azColName) {
     using tbl_type = PDM::pdm_database::return_table;
-    tbl_type* table = static_cast<tbl_type*>(ptr);
+    auto* table = static_cast<tbl_type*>(ptr);
 
     int i;
     std::vector<std::string> tmp;
@@ -22,7 +22,7 @@ namespace PDM {
     }
     for (i = 0; i < argc; i++) {
       tmp.push_back(std::move(std::string(argv[i])));
-      printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+//      printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
     }
     table->argv.push_back(std::move(tmp));
     printf("\n");

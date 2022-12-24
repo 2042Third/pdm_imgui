@@ -26,7 +26,10 @@ namespace PDM {
     public:
       Runtime();
       ~Runtime();
-    pdm_database * db;
+    pdm_database * db; // debug
+    pdm_database * user_conf; // User config
+    pdm_database * user_data; // User data
+
   };
 
 

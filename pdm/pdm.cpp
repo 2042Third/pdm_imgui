@@ -8,7 +8,9 @@ namespace PDM {
    * Constructor
    * */
   Runtime::Runtime(){
-    db = new pdm_database();
+    db = new pdm_database(); // Create the db used for debug, also store the most recent data
+    user_conf = new pdm_database(); // Create config db for user
+
     set_db(db);
   }
   /**
