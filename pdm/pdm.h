@@ -22,14 +22,20 @@ namespace PDM {
       public Status,
       public UI,
       public network
-      {
-    public:
-      Runtime();
-      ~Runtime();
+  {
+  public:
     pdm_database * db; // debug
     pdm_database * user_conf; // User config
     pdm_database * user_data; // User data
+    Runtime();
+    ~Runtime();
 
+    std::string conf_loc;
+    std::string data_loc;
+
+    int signin_action(const std::string&a, NetWriter* wt_in);
+
+    int get_user_loc(const std::string &file_names);
   };
 
 

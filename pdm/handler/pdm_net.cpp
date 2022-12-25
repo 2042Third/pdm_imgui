@@ -26,7 +26,7 @@ namespace PDM {
     return nmemb; /* we copied this many bytes */
   }
 
-  int network::signin_action(const std::string&a, NetWriter* wt_in) {
+  int network::signin_post(const std::string&a, NetWriter* wt_in) {
     post(a,actions.signinURL,  wt_in,post_callback_signin);
     return 1;
   }

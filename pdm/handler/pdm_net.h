@@ -47,7 +47,7 @@ namespace PDM {
       return std::move(signin_data);
     }
 
-    int signin_action(const std::string&a, NetWriter* wt_in) ;
+    int signin_post(const std::string&a, NetWriter* wt_in) ;
     int note_heads_action (const std::string&a, NetWriter* wt_in) ;
     static void get_userinfo (const json &j,UserInfo& userinfo);
     static size_t post_callback_heads( char *data, size_t size, size_t nmemb, void *userp);
