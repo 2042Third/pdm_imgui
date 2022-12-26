@@ -16,6 +16,7 @@ namespace PDM {
     wt->readptr = std::move(std::string(data,nmemb));
     wt->js = json::parse(wt->readptr);
     PDM::network::get_userinfo(wt->js,wt->userinfo);
+    std::cout<< "Signin Return: "<< wt->js<<std::endl;
     return nmemb; /* we copied this many bytes */
   }
   size_t network::post_callback_heads( char *data, size_t size, size_t nmemb, void *userp){

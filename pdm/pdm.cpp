@@ -3,6 +3,7 @@
 
 #include "pdm.h"
 #include "misc/base64.h"
+#include "misc/md5.h"
 #include <filesystem>
 
 namespace PDM {
@@ -20,10 +21,12 @@ namespace PDM {
     return std::filesystem::exists(confp) && std::filesystem::exists(datap);
   }
 
-  int Runtime::signin_action(const std::string&a, NetWriter* wt_in, const std::string & ps){
+  int Runtime::signin_action(const std::string&a, NetWriter* wt_in, const char* password){
+    std::string ps = password;
     signin_post(a,wt_in); // Call network post for Sign In action
     if (wt.userinfo.status == "success") { // The sign in is successful
-      std::string file_names = base64_encode(wt.userinfo.email,true); // base 64 url encode user email
+      MD5 md5; md5.add(wt.userinfo.email.c_str(),wt.userinfo.email.size());
+      std::string file_names = md5.getHash(); // md5 encode user email
       // Check or create the appropriate db
       if (!get_user_loc(file_names)){
         const std::filesystem::path confp(conf_loc), datap(data_loc);
@@ -31,10 +34,14 @@ namespace PDM {
         std::filesystem::create_directories(datap.parent_path());
         // TODO: What to do when user first use this computer to login
       }
-      user_conf->open_db(conf_loc.c_str(),ps.c_str(),ps.size());
+      std::cout<< "conf_loc: "<< conf_loc<<std::endl;
+      std::cout<< "data_loc: "<< data_loc<<std::endl;
+      user_conf->open_db(conf_loc.c_str(),"pdmnotes",8);
+      user_data->open_db(conf_loc.c_str(),ps.c_str(),ps.size());
     } else {
       // TODO: Deal with the failed login
     }
+    return 1;
   }
 
   /**
