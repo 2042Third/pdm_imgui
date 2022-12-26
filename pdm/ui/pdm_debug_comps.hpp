@@ -17,7 +17,7 @@ namespace PDM::Components {
     if (ImGui::Button("login")|| (ImGui::IsWindowFocused()&&ImGui::IsKeyReleased(ImGuiKey_Enter) )) {
       std::map<std::string,std::string> data=PDM::pdm_net_type::get_signin_json(email,password);
       j_str = PDM::network::get_json(data);
-      rt->signin_action(j_str, &rt->wt);
+      rt->signin_action(j_str, &rt->wt,std::move(std::string(password)));
     }
     if (ImGui::Button("Note Heads")) {
       std::map<std::string,std::string> data=

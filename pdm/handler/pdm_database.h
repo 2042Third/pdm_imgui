@@ -23,7 +23,7 @@ public:
   pdm_database();
   ~pdm_database();
 
-  int open_db(char* name, char*pas,int pas_size);
+  int open_db(const char* name, const char*pas,int pas_size);
   int close_db(char* name);
   int execute(char *input);
   int execute_note_heads(const nlohmann::json&j,const UserInfo&userinfo);

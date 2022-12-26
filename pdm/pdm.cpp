@@ -20,7 +20,7 @@ namespace PDM {
     return std::filesystem::exists(confp) && std::filesystem::exists(datap);
   }
 
-  int Runtime::signin_action(const std::string&a, NetWriter* wt_in){
+  int Runtime::signin_action(const std::string&a, NetWriter* wt_in, const std::string & ps){
     signin_post(a,wt_in); // Call network post for Sign In action
     if (wt.userinfo.status == "success") { // The sign in is successful
       std::string file_names = base64_encode(wt.userinfo.email,true); // base 64 url encode user email
@@ -31,7 +31,7 @@ namespace PDM {
         std::filesystem::create_directories(datap.parent_path());
         // TODO: What to do when user first use this computer to login
       }
-      user_conf->open_db(conf_loc.c_str(),wt.);
+      user_conf->open_db(conf_loc.c_str(),ps.c_str(),ps.size());
     } else {
       // TODO: Deal with the failed login
     }

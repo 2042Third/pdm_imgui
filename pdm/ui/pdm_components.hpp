@@ -11,6 +11,7 @@
 #include "cc20_multi.h"
 #include "misc/base64.h"
 #include "themes/pdm_colors.h"
+#include "misc/md5.h"
 
 // STATIC
 namespace PDM::Components {
@@ -390,8 +391,7 @@ namespace PDM::Components {
           const int max_input = 4096;
           static char input_buf[max_input + 1];
 
-          static std::string base64, base64url, hax, sha3;
-
+          static std::string base64, base64url, hax, sha3, md5;
 
           ImGui::Text("Input: ");
           ImGui::SameLine(150);
@@ -413,6 +413,10 @@ namespace PDM::Components {
           ImGui::SameLine(150);
           ImGui::SingleLineSelectableText("##sha3buff", sha3.data(), sha3.size());
 
+          ImGui::Text("md5: ");
+          ImGui::SameLine(150);
+          ImGui::SingleLineSelectableText("##md5buff", md5.data(), md5.size());
+
 
           ImGui::InputText("Input", input_buf, max_input, 0);
           if (ImGui::Button("Done") || (ImGui::IsWindowFocused() && ImGui::IsKeyReleased(ImGuiKey_Enter))) {
@@ -421,6 +425,9 @@ namespace PDM::Components {
             base64url = base64_encode(input, true);
             hax = stoh(input);
             sha3 = get_hash(input);
+            MD5 md5_obj;
+            md5_obj.add(input.c_str(),input.size());
+            md5 = md5_obj.getHash();
           }
           ImGui::EndTabItem(); // hash and encodes
         }
