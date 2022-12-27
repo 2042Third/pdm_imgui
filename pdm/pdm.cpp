@@ -37,7 +37,7 @@ namespace PDM {
       std::cout<< "conf_loc: "<< conf_loc<<std::endl;
       std::cout<< "data_loc: "<< data_loc<<std::endl;
       user_conf->open_db(conf_loc.c_str(),"pdmnotes",8);
-      user_data->open_db(conf_loc.c_str(),ps.c_str(),ps.size());
+      user_data->open_db(data_loc.c_str(),ps.c_str(),ps.size());
     } else {
       // TODO: Deal with the failed login
     }
