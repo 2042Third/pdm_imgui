@@ -54,6 +54,12 @@ namespace PDM {
         ImGui::EndMenu(); // network
       }
       if(ImGui::BeginMenu("Database")){
+        if(ImGui::MenuItem("Toggle Database Debug Window", "")){
+          rt->ui->has_database_debug_window = ! rt->ui->has_database_debug_window;
+        }
+        if(ImGui::MenuItem("Toggle Database Viewer Window", "")){
+          rt->ui->has_database_debug_viewer = ! rt->ui->has_database_debug_viewer;
+        }
         if(ImGui::MenuItem("Open \".sqlite\" File", "")){
           NFD_Init();
 

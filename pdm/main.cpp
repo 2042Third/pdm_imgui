@@ -594,15 +594,8 @@ int main(int, char**)
           ImGui::EndMenu();
         }
 
-        HelpMarker(
-            "When docking is enabled, you can ALWAYS dock MOST window into another! Try it now!" "\n"
-            "- Drag from window title bar or their tab to dock/undock." "\n"
-            "- Drag from window menu button (upper-left button) to undock an entire node (all windows)." "\n"
-            "- Hold SHIFT to disable docking (if io.ConfigDockingWithShift == false, default)" "\n"
-            "- Hold SHIFT to enable docking (if io.ConfigDockingWithShift == true)" "\n"
-            "This demo app has nothing to do with enabling docking!" "\n\n"
-            "This demo app only demonstrate the use of ImGui::DockSpace() which allows you to manually create a docking node _within_ another window." "\n\n"
-            "Read comments in ShowExampleAppDockSpace() for more details.");
+        HelpMarker("PDM notes desktop, version 0.0.1. "
+                   "By Yi Yang, 2022");
 
         ImGui::EndMenuBar();
       }
@@ -625,7 +618,7 @@ int main(int, char**)
     ImGui::End();
     //Signin
     ImGui::Begin("Signin");
-//    PDM::Components::signin_popup(pdm);
+    PDM::Components::signin_popup(pdm);
     ImGui::End();
 
     // Docking test windows
@@ -635,6 +628,14 @@ int main(int, char**)
     if (pdm->ui->has_database_debug_window) {
       PDM::Components::database_view(pdm);
     }
+
+    // Children windows
+    if (pdm->ui->has_database_debug_viewer) {
+      ImGui::Begin("Database viewer", &pdm->ui->has_database_debug_viewer);
+      PDM::Components::database_viewer(pdm);
+      ImGui::End();
+    }
+
     if (pdm->ui->net_debug_open) {
       ImGui::Begin("Network Debug", &pdm->ui->net_debug_open);
       PDM::Components::net_debug(pdm);

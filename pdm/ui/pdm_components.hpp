@@ -157,10 +157,6 @@ namespace PDM::Components {
     }
     ImGui::SameLine();
 
-    if (ImGui::Button("Open Database Viewer")) {
-      rt->toggle_database_debug_window();
-    }
-
     if (ImGui::Button("Get All Tables")) {
       rt->db->execute(back_ground_q);
     }
@@ -201,12 +197,7 @@ namespace PDM::Components {
 
     ImGui::End();
 
-    // Children windows
-    if (rt->ui->has_database_debug_window) {
-      ImGui::Begin("Database viewer", &rt->ui->database_viewer_closable);
-      database_viewer(rt);
-      ImGui::End();
-    }
+
 
     return true;
   }
