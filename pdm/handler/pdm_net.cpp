@@ -27,17 +27,20 @@ namespace PDM {
     return nmemb; /* we copied this many bytes */
   }
 
-  int network::signin_post(const std::string&a, NetWriter* wt_in, size_t _callback(char *, size_t , size_t , void *)) {
+  int network::signin_post        (const std::string&a, NetWriter* wt_in,
+                                   size_t _callback(char *, size_t , size_t , void *)) {
     post(a,actions.signinURL,  wt_in,_callback);
     return 1;
   }
 
-  int network::note_heads_action(const std::string &a, NetWriter *wt_in) {
-    post(a,actions.notesGetHeadsURL,  wt_in,post_callback_heads);
+  int network::note_heads_action  (const std::string &a, NetWriter *wt_in,
+                                   size_t _callback(char *, size_t , size_t , void *)) {
+    post(a,actions.notesGetHeadsURL,  wt_in,_callback);
     return 1;
   }
 
-  void network::post (const std::string& a, const std::string& b, NetWriter* wt,size_t callback(char *,size_t,size_t,void *)) {
+  void network::post (const std::string& a, const std::string& b, NetWriter* wt,
+                      size_t callback(char *,size_t,size_t,void *)) {
     pdm_network::post(a,b, callback, wt);
   }
 

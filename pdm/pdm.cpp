@@ -23,7 +23,14 @@ namespace PDM {
 
   int Runtime::signin_action(const std::string&a, NetWriter* wt_in, const char* password){
     std::string ps = password;
-    signin_post(a,wt_in); // Call network post for Sign In action
+    struct c {
+      static size_t _callback(char *data, size_t size, size_t nmemb, void *userp) {
+
+        return post_callback_signin(data,  size,  nmemb, userp); /* we copied this many bytes */
+      }
+    };
+
+    signin_post(a,wt_in,c::_callback); // Call network post for Sign In action
     if (wt.userinfo.status == "success") { // The sign in is successful
       MD5 md5; md5.add(wt.userinfo.email.c_str(),wt.userinfo.email.size());
       std::string file_names = md5.getHash(); // md5 encode user email
