@@ -35,7 +35,7 @@ namespace PDM {
 
     int signin_action(const std::string&a, NetWriter* wt_in,const char* password);
 
-    int get_user_loc(const std::string &file_names);
+    int get_user_loc(const std::string &file_names,int conf=1);
   };
 
 
