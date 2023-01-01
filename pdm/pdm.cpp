@@ -28,8 +28,8 @@ namespace PDM {
     return 0;
   }
 
-  int Runtime::signin_action(const std::string&a, NetWriter* wt_in, const char* password){
-    std::string ps = password;
+  int Runtime::signin_action(const std::string&a, NetWriter* wt_in, const char* password,const char* email){
+    std::string ps = password, user_mail = email;
     struct NetCallBack_ {
       static size_t _callback(char *data, size_t size, size_t nmemb, void *userp) {
         int callback_out = (int) post_callback_signin(data,  size,  nmemb, userp);
@@ -53,7 +53,8 @@ namespace PDM {
         return callback_out; /* we copied this many bytes */
       }
     };
-    MD5 md5; md5.add(wt.userinfo.email.c_str(),wt.userinfo.email.size());
+    std::cout<<"User email: "<< wt.userinfo.email<< std::endl;
+    MD5 md5; md5.add(user_mail.c_str(),user_mail.size());
     std::string file_names = md5.getHash();
     get_user_loc(file_names);
     const std::filesystem::path confp(conf_loc);
