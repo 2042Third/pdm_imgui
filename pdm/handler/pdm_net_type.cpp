@@ -25,7 +25,7 @@ namespace PDM {
         {
              {"username" , "" }
             ,{"content"  , "" }
-            ,{"sess"     , sess }
+            ,{"sess"     , sess } // use the stored session key for encryption
             ,{"ntype"    , ntype }
             ,{"email"    , email }
         };
