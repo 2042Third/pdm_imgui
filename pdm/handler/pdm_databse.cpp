@@ -17,11 +17,15 @@ namespace PDM {
     std::vector<std::string> tmp;
     if(table->argc==0){ // first time recording
       table->argc = argc;
-      for (unsigned f =0 ;f<argc;f++)
-        table->col_name.push_back(std::move(std::string(azColName[f])));
+      for (unsigned f =0 ;f<argc;f++) {
+        if (azColName[f]) table->col_name.push_back(std::move(std::string(azColName[f])));
+        else table->col_name.push_back(std::move(std::string("")));
+      }
     }
+    std::cout<< "Database Callback #"<< table->argc<<std::endl;
     for (i = 0; i < argc; i++) {
-      tmp.push_back(std::move(std::string(argv[i])));
+      if (argv[i]) tmp.push_back(std::move(std::string(argv[i])));
+      else tmp.push_back(std::move(std::string("")));
     }
     table->argv.push_back(std::move(tmp));
     printf("\n");

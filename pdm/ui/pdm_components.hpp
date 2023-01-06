@@ -121,8 +121,13 @@ namespace PDM::Components {
           // push color on odd number
           if (row % 2)
             ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::ColorConvertU32ToFloat4(PDM::THEME::COLOR::Dark::GRAY200));
-          ImGui::InputText(cell_name, (char *) rt->db->current_display_table.argv[row][column].c_str(),
-                           rt->db->current_display_table.argv[row][column].size());
+          ImGui::InputText
+          ( // Each cell of a displaying table
+              cell_name,
+              (char *) rt->db->current_display_table.argv[row][column].c_str(),
+              rt->db->current_display_table.argv[row][column].size(),
+              ImGuiInputTextFlags_ReadOnly
+           );
           if (row % 2)ImGui::PopStyleColor(); // pop color
           ImGui::PopItemWidth();
         }
