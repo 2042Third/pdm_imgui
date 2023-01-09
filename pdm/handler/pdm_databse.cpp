@@ -22,7 +22,6 @@ namespace PDM {
         else table->col_name.push_back(std::move(std::string("")));
       }
     }
-    std::cout<< "Database Callback #"<< table->argc<<std::endl;
     for (i = 0; i < argc; i++) {
       if (argv[i]) tmp.push_back(std::move(std::string(argv[i])));
       else tmp.push_back(std::move(std::string("")));
