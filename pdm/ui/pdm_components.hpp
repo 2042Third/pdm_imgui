@@ -420,7 +420,7 @@ namespace PDM::Components {
             base64 = base64_encode(input);
             base64url = base64_encode(input, true);
             hax = stoh(input);
-            sha3 = get_hash(input);
+            sha3 = get_hash(input);dd
             MD5 md5_obj;
             md5_obj.add(input.c_str(),input.size());
             md5 = md5_obj.getHash();
