@@ -6,7 +6,7 @@
 #define PDM_PLATFORMS_UI_PDM_NET_H
 
 #include <string>
-#include "pdm_platforms_ui/pdm/lib/json/single_include/nlohmann/json.hpp"
+#include "nlohmann/json.hpp"
 #include <map>
 #include "pdm-network.h"
 #include "types.h"

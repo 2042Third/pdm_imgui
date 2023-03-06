@@ -3,8 +3,6 @@
 //
 
 #include "pdm_net.h"
-#include "pdm_platforms_ui/pdm/lib/json/single_include/nlohmann/json.hpp"
-#include "pdm_platforms_ui/pdm/lib/pdm_network/pdm-network.h"
 #include "net_convert.h"
 #include <iostream>
 
